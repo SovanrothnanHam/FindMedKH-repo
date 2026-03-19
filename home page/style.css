@@ -1,0 +1,438 @@
+/* Remove default margin */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navigation bar */
+nav {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+}
+
+/* Logo */
+.logo {
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Navigation links */
+.nav-links a {
+    color: black;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+    background-color: #90e0ef;
+    color: #ffffff;
+}
+
+/* Logo hover */
+.logo:hover {
+    color: #90e0ef;
+}
+/* Login Button Special Style */
+.login-btn {
+    background-color: #ffee03;
+    color: black !important;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+/* Hover effect */
+.login-btn:hover {
+    background-color: #ffee03;
+    color: white !important;
+    transform: scale(1.05);
+}
+
+/* Header section */
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(to right, #0077b6, #00b4d8);
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+}
+
+/* Hero Content */
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* specialization */
+
+/* Specializations Section */
+
+.specializations {
+    padding: 80px 40px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.specializations h2 {
+    font-size: 32px;
+    margin-bottom: 50px;
+    color: #0077b6;
+}
+
+/* Card Layout */
+/* Horizontal Scroll Layout */
+.card-container {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+}
+
+/* Hide scrollbar (optional clean look) */
+.card-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    background: #00b4d8;
+    border-radius: 10px;
+}
+
+/* Card Design */
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    cursor: pointer;
+    min-width: 250px;
+    flex-shrink: 0;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 15px 0 10px;
+    color: #0077b6;
+}
+
+.card p {
+    padding: 0 15px 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Hover Effect */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+/* Card Button */
+.card-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 18px;
+    background-color: #0077b6;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+/* Button Hover */
+.card-btn:hover {
+    background-color: #00b4d8;
+    transform: scale(1.05);
+}
+
+/* hospital overview */
+
+/* Hospital Overview Section */
+.hospital-overview {
+    padding: 80px 40px;
+    background-color:  #a2e0ec; 
+    text-align: center;
+}
+
+.hospital-overview h2 {
+    font-size: 32px;
+    margin-bottom: 50px;
+    color: #0077b6;
+}
+
+/* Category Layout */
+.hospital-category {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+}
+
+.hospital-group {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Category Titles */
+.public-title {
+    color: #2a9d8f;
+    margin-bottom: 20px;
+}
+
+.private-title {
+    color: #e76f51;
+    margin-bottom: 20px;
+}
+
+/* Hospital Cards */
+.hospital-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hospital-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    text-align: left;
+}
+
+.hospital-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.hospital-card h4 {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.hospital-card p {
+    font-size: 14px;
+    color: #555;
+}
+/* Button Container */
+.hospital-more-btn {
+    text-align: center;
+    margin-top: 60px;
+}
+
+/* Modern Gradient Button */
+.more-info-btn {
+    display: inline-block;
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #0077b6, #00b4d8);
+    box-shadow: 0 0 15px rgba(0, 180, 216, 0.6);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect */
+.more-info-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(0, 180, 216, 0.9);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(0, 180, 216, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 180, 216, 1);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(0, 180, 216, 0.6);
+    }
+}
+
+.more-info-btn {
+    animation: pulse 2s infinite;
+}
+
+/* contact information */
+/* Contact Wrapper */
+.contact-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 80px 60px;
+    background-color: #f8f9fa;
+    flex-wrap: wrap;
+}
+
+/* LEFT SIDE */
+.contact-left {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-left h2 {
+    margin-bottom: 20px;
+    color: #0077b6;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.contact-form button {
+    padding: 12px;
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #005f8e;
+}
+
+
+/* RIGHT SIDE */
+.contact-right {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-right h3 {
+    margin-bottom: 20px;
+    color: #0077b6;
+}
+
+.social-icons {
+    margin-bottom: 30px;
+}
+
+.social-icons a {
+    margin-right: 15px;
+    font-size: 20px;
+    color: #0077b6;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: #023e8a;
+}
+
+.important-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.important-links ul li {
+    margin-bottom: 8px;
+}
+
+.important-links ul li a {
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+}
+
+.important-links ul li a:hover {
+    color: #0077b6;
+}
+
+.contact-info {
+    margin-top: 20px;
+    font-size: 14px;
+}
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/*chatbot item  */
+
+/* Pulse Animation */
+/* Floating Chatbot Button */
+.chatbot-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(45deg, #00b4d8, #0077b6);
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    animation: pulseChat 1s infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulseChat {
+    0% { box-shadow: 0 0 0 0 rgba(0,180,216,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(0,180,216,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,180,216,0); }
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #0077b6;
+    color: white;
+}

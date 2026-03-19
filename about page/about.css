@@ -1,0 +1,357 @@
+/* Remove default margin */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navigation bar */
+nav {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+}
+
+/* Logo */
+.logo {
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Navigation links */
+.nav-links a {
+    color: black;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+    background-color: #90e0ef;
+    color: #ffffff;
+}
+
+/* Logo hover */
+.logo:hover {
+    color: #90e0ef;
+}
+/* Login Button Special Style */
+.login-btn {
+    background-color: #ffee03;
+    color: black !important;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+/* Hover effect */
+.login-btn:hover {
+    background-color: #ffee03;
+    color: white !important;
+    transform: scale(1.05);
+}
+
+/* --------------------------------------------------- */
+
+/* SCROLL REVEAL */
+.reveal {
+    opacity: 0;
+    transform: translateY(80px);
+    transition: 0.8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* HERO */
+.about-hero {
+    background: linear-gradient(135deg, #0077b6, #00b4d8);
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+}
+
+.about-hero h1 {
+    font-size: 42px;
+}
+
+.about-hero p {
+    font-size: 18px;
+}
+
+
+/* ABOUT SECTION */
+.about-section {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 80px 40px;
+    flex-wrap: wrap;
+}
+
+.about-box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.4s ease;
+}
+
+.about-box:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+}
+
+.about-box i {
+    font-size: 40px;
+    color: #0077b6;
+    margin-bottom: 15px;
+}
+
+
+/* WHY CHOOSE US */
+.why-choose {
+    background: #a2e0ec;
+    padding: 80px 40px;
+    text-align: center;
+}
+
+.why-choose h2 {
+    margin-bottom: 50px;
+    font-size: 32px;
+    color: #0077b6;
+}
+
+.why-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.why-card {
+    background: white;
+    padding: 30px;
+    width: 250px;
+    border-radius: 15px;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.why-card:hover {
+    transform: translateY(-10px);
+    background: #0077b6;
+    color: white;
+}
+
+.why-card i {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+
+/* CHATBOT SECTION */
+.chatbot-section {
+    padding: 80px 40px;
+}
+
+.chatbot-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.chatbot-icon {
+    font-size: 80px;
+    color: #0077b6;
+}
+
+.chatbot-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    background-color: #0077b6;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.chatbot-btn:hover {
+    background-color: #023e8a;
+    transform: scale(1.05);
+}
+
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #0077b6;
+    color: white;
+}
+
+/* contact information */
+/* Contact Wrapper */
+.contact-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 80px 60px;
+    background-color: #a2e0ec;
+    flex-wrap: wrap;
+}
+
+/* LEFT SIDE */
+.contact-left {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-left h2 {
+    margin-bottom: 20px;
+    color: #0077b6;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.contact-form button {
+    padding: 12px;
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-form button:hover {
+    background-color: #005f8e;
+}
+
+
+/* RIGHT SIDE */
+.contact-right {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-right h3 {
+    margin-bottom: 20px;
+    color: #0077b6;
+}
+
+.social-icons {
+    margin-bottom: 30px;
+}
+
+.social-icons a {
+    margin-right: 15px;
+    font-size: 20px;
+    color: #0077b6;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: #023e8a;
+}
+
+.important-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.important-links ul li {
+    margin-bottom: 8px;
+}
+
+.important-links ul li a {
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+}
+
+.important-links ul li a:hover {
+    color: #0077b6;
+}
+
+.contact-info {
+    margin-top: 20px;
+    font-size: 14px;
+}
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #0077b6;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/*chatbot item  */
+
+/* Pulse Animation */
+/* Floating Chatbot Button */
+.chatbot-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(45deg, #00b4d8, #0077b6);
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    animation: pulseChat 1s infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulseChat {
+    0% { box-shadow: 0 0 0 0 rgba(0,180,216,0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(0,180,216,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,180,216,0); }
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    color: #0077b6;
+}

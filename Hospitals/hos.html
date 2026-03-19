@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FindMedKH - Hospitals</title>
+  <link rel="stylesheet" href="hos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="../home page/home.html" class="logo">FindMedKH</a>
+
+      <div class="nav-links">
+        <a href="../home page/home.html">Home</a>
+        <a href="../about page/about.html">About</a>
+        <a href="../chatbot page/chatbot.html">Chatbot</a>
+        <a href="../Hospitals/hos.html" class="active">Hospitals</a>
+        <a href="../FAQs/FAQs.html">FAQs</a>
+        <a href="../login page/login.html" class="login-btn">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hospital-page">
+    <div class="hospital-top">
+      <h1>Hospitals in Cambodia</h1>
+      <p>Browse hospitals, search by name, and filter by specialization.</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search hospital name..." />
+      </div>
+
+      <div class="filter-box">
+        <i class="fa-solid fa-filter"></i>
+        <select id="specializationFilter">
+          <option value="all">All Specializations</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Pediatrics">Pediatrics</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="Neurology">Neurology</option>
+          <option value="General Medicine">General Medicine</option>
+          <option value="Emergency Medicine">Emergency Medicine</option>
+          <option value="Surgery">Surgery</option>
+          <option value="Obstetrics & Gynecology">Obstetrics & Gynecology</option>
+          <option value="Oncology">Oncology</option>
+          <option value="Infectious Diseases">Infectious Diseases</option>
+          <option value="Dermatology">Dermatology</option>
+          <option value="Dentistry">Dentistry</option>
+          <option value="Ophthalmology">Ophthalmology</option>
+          <option value="ENT">ENT</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hospital-grid" id="hospitalGrid">
+
+      <div class="hospital-card" data-name="Calmette Hospital" data-specialization="Cardiology">
+        <img src="../images/calmette.jpg" alt="Calmette Hospital">
+        <div class="hospital-info">
+          <h3>Calmette Hospital</h3>
+          <span>Cardiology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Khmer-Soviet Friendship Hospital" data-specialization="Emergency Medicine">
+        <img src="../images/soviet_hospital.jpg" alt="Khmer-Soviet Friendship Hospital">
+        <div class="hospital-info">
+          <h3>Khmer-Soviet Friendship Hospital</h3>
+          <span>Emergency Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="National Pediatric Hospital" data-specialization="Pediatrics">
+        <img src="../images/pediatric_hos.jpg" alt="National Pediatric Hospital">
+        <div class="hospital-info">
+          <h3>National Pediatric Hospital</h3>
+          <span>Pediatrics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Royal Phnom Penh Hospital" data-specialization="General Medicine">
+        <img src="../images/hospital4.jpg" alt="Royal Phnom Penh Hospital">
+        <div class="hospital-info">
+          <h3>Royal Phnom Penh Hospital</h3>
+          <span>General Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Sunrise Japan Hospital" data-specialization="Surgery">
+        <img src="../images/sunrise.jpg" alt="Sunrise Japan Hospital">
+        <div class="hospital-info">
+          <h3>Sunrise Japan Hospital</h3>
+          <span>Surgery</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Sen Sok International University Hospital" data-specialization="Orthopedics">
+        <img src="../images/sensok_hos.jpg" alt="Sen Sok International University Hospital">
+        <div class="hospital-info">
+          <h3>Sen Sok International University Hospital</h3>
+          <span>Orthopedics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Khema Clinic and Maternity" data-specialization="Obstetrics & Gynecology">
+        <img src="../images/khema.jpg" alt="Khema Clinic and Maternity">
+        <div class="hospital-info">
+          <h3>Khema Clinic and Maternity</h3>
+          <span>Obstetrics & Gynecology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Bangkok Hospital Cambodia" data-specialization="Neurology">
+        <img src="../images/hospital8.jpg" alt="Bangkok Hospital Cambodia">
+        <div class="hospital-info">
+          <h3>Bangkok Hospital Cambodia</h3>
+          <span>Neurology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Central Hospital" data-specialization="Oncology">
+        <img src="../images/central_hos.jpg" alt="Central Hospital">
+        <div class="hospital-info">
+          <h3>Central Hospital</h3>
+          <span>Oncology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Mekong Medical Center" data-specialization="Infectious Diseases">
+        <img src="../images/hospital10.jpg" alt="Mekong Medical Center">
+        <div class="hospital-info">
+          <h3>Mekong Medical Center</h3>
+          <span>Infectious Diseases</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Angkor Children Hospital" data-specialization="Pediatrics">
+        <img src="../images/angkor.jpg" alt="Angkor Children Hospital">
+        <div class="hospital-info">
+          <h3>Angkor Children Hospital</h3>
+          <span>Pediatrics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Preah Ket Mealea Hospital" data-specialization="Emergency Medicine">
+        <img src="../images/hospital12.jpg" alt="Preah Ket Mealea Hospital">
+        <div class="hospital-info">
+          <h3>Preah Ket Mealea Hospital</h3>
+          <span>Emergency Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Preah Ang Duong Hospital" data-specialization="ENT">
+        <img src="../images/hospital13.jpg" alt="Preah Ang Duong Hospital">
+        <div class="hospital-info">
+          <h3>Preah Ang Duong Hospital</h3>
+          <span>ENT</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="National Cancer Center" data-specialization="Oncology">
+        <img src="../images/hospital14.jpg" alt="National Cancer Center">
+        <div class="hospital-info">
+          <h3>National Cancer Center</h3>
+          <span>Oncology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Vision Care Hospital" data-specialization="Ophthalmology">
+        <img src="../images/hospital15.jpg" alt="Vision Care Hospital">
+        <div class="hospital-info">
+          <h3>Vision Care Hospital</h3>
+          <span>Ophthalmology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Smile Dental Center" data-specialization="Dentistry">
+        <img src="../images/hospital16.jpg" alt="Smile Dental Center">
+        <div class="hospital-info">
+          <h3>Smile Dental Center</h3>
+          <span>Dentistry</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Healthy Skin Clinic" data-specialization="Dermatology">
+        <img src="../images/hospital17.jpg" alt="Healthy Skin Clinic">
+        <div class="hospital-info">
+          <h3>Healthy Skin Clinic</h3>
+          <span>Dermatology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Heart Care Center" data-specialization="Cardiology">
+        <img src="../images/hospital18.jpg" alt="Heart Care Center">
+        <div class="hospital-info">
+          <h3>Heart Care Center</h3>
+          <span>Cardiology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Phnom Penh Family Hospital" data-specialization="General Medicine">
+        <img src="../images/hospital19.jpg" alt="Phnom Penh Family Hospital">
+        <div class="hospital-info">
+          <h3>Phnom Penh Family Hospital</h3>
+          <span>General Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Women Care Hospital" data-specialization="Obstetrics & Gynecology">
+        <img src="../images/hospital20.jpg" alt="Women Care Hospital">
+        <div class="hospital-info">
+          <h3>Women Care Hospital</h3>
+          <span>Obstetrics & Gynecology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="City Trauma Center" data-specialization="Orthopedics">
+        <img src="../images/hospital21.jpg" alt="City Trauma Center">
+        <div class="hospital-info">
+          <h3>City Trauma Center</h3>
+          <span>Orthopedics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Brain and Nerve Hospital" data-specialization="Neurology">
+        <img src="../images/hospital22.jpg" alt="Brain and Nerve Hospital">
+        <div class="hospital-info">
+          <h3>Brain and Nerve Hospital</h3>
+          <span>Neurology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Emergency Care Phnom Penh" data-specialization="Emergency Medicine">
+        <img src="../images/hospital23.jpg" alt="Emergency Care Phnom Penh">
+        <div class="hospital-info">
+          <h3>Emergency Care Phnom Penh</h3>
+          <span>Emergency Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Surgical Excellence Center" data-specialization="Surgery">
+        <img src="../images/hospital24.jpg" alt="Surgical Excellence Center">
+        <div class="hospital-info">
+          <h3>Surgical Excellence Center</h3>
+          <span>Surgery</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Infection Care Unit" data-specialization="Infectious Diseases">
+        <img src="../images/hospital25.jpg" alt="Infection Care Unit">
+        <div class="hospital-info">
+          <h3>Infection Care Unit</h3>
+          <span>Infectious Diseases</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Dermacare Hospital" data-specialization="Dermatology">
+        <img src="../images/hospital26.jpg" alt="Dermacare Hospital">
+        <div class="hospital-info">
+          <h3>Dermacare Hospital</h3>
+          <span>Dermatology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Modern Eye Hospital" data-specialization="Ophthalmology">
+        <img src="../images/hospital27.jpg" alt="Modern Eye Hospital">
+        <div class="hospital-info">
+          <h3>Modern Eye Hospital</h3>
+          <span>Ophthalmology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Bright Smile Hospital" data-specialization="Dentistry">
+        <img src="../images/hospital28.jpg" alt="Bright Smile Hospital">
+        <div class="hospital-info">
+          <h3>Bright Smile Hospital</h3>
+          <span>Dentistry</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Ear Nose Throat Center" data-specialization="ENT">
+        <img src="../images/hospital29.jpg" alt="Ear Nose Throat Center">
+        <div class="hospital-info">
+          <h3>Ear Nose Throat Center</h3>
+          <span>ENT</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Children Wellness Hospital" data-specialization="Pediatrics">
+        <img src="../images/hospital30.jpg" alt="Children Wellness Hospital">
+        <div class="hospital-info">
+          <h3>Children Wellness Hospital</h3>
+          <span>Pediatrics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Golden Heart Hospital" data-specialization="Cardiology">
+        <img src="../images/hospital31.jpg" alt="Golden Heart Hospital">
+        <div class="hospital-info">
+          <h3>Golden Heart Hospital</h3>
+          <span>Cardiology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Lotus General Hospital" data-specialization="General Medicine">
+        <img src="../images/hospital32.jpg" alt="Lotus General Hospital">
+        <div class="hospital-info">
+          <h3>Lotus General Hospital</h3>
+          <span>General Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Safe Birth Center" data-specialization="Obstetrics & Gynecology">
+        <img src="../images/hospital33.jpg" alt="Safe Birth Center">
+        <div class="hospital-info">
+          <h3>Safe Birth Center</h3>
+          <span>Obstetrics & Gynecology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Bone and Joint Clinic" data-specialization="Orthopedics">
+        <img src="../images/hospital34.jpg" alt="Bone and Joint Clinic">
+        <div class="hospital-info">
+          <h3>Bone and Joint Clinic</h3>
+          <span>Orthopedics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Neuro Plus Hospital" data-specialization="Neurology">
+        <img src="../images/hospital35.jpg" alt="Neuro Plus Hospital">
+        <div class="hospital-info">
+          <h3>Neuro Plus Hospital</h3>
+          <span>Neurology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Rapid Emergency Hospital" data-specialization="Emergency Medicine">
+        <img src="../images/hospital36.jpg" alt="Rapid Emergency Hospital">
+        <div class="hospital-info">
+          <h3>Rapid Emergency Hospital</h3>
+          <span>Emergency Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Advanced Surgery Center" data-specialization="Surgery">
+        <img src="../images/hospital37.jpg" alt="Advanced Surgery Center">
+        <div class="hospital-info">
+          <h3>Advanced Surgery Center</h3>
+          <span>Surgery</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Cancer Hope Hospital" data-specialization="Oncology">
+        <img src="../images/hospital38.jpg" alt="Cancer Hope Hospital">
+        <div class="hospital-info">
+          <h3>Cancer Hope Hospital</h3>
+          <span>Oncology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Tropical Disease Center" data-specialization="Infectious Diseases">
+        <img src="../images/hospital39.jpg" alt="Tropical Disease Center">
+        <div class="hospital-info">
+          <h3>Tropical Disease Center</h3>
+          <span>Infectious Diseases</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Clear Skin Hospital" data-specialization="Dermatology">
+        <img src="../images/hospital40.jpg" alt="Clear Skin Hospital">
+        <div class="hospital-info">
+          <h3>Clear Skin Hospital</h3>
+          <span>Dermatology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Vision Plus Eye Center" data-specialization="Ophthalmology">
+        <img src="../images/hospital41.jpg" alt="Vision Plus Eye Center">
+        <div class="hospital-info">
+          <h3>Vision Plus Eye Center</h3>
+          <span>Ophthalmology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Dental Expert Hospital" data-specialization="Dentistry">
+        <img src="../images/hospital42.jpg" alt="Dental Expert Hospital">
+        <div class="hospital-info">
+          <h3>Dental Expert Hospital</h3>
+          <span>Dentistry</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="ENT Specialist Hospital" data-specialization="ENT">
+        <img src="../images/hospital43.jpg" alt="ENT Specialist Hospital">
+        <div class="hospital-info">
+          <h3>ENT Specialist Hospital</h3>
+          <span>ENT</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Kid Care Medical Center" data-specialization="Pediatrics">
+        <img src="../images/hospital44.jpg" alt="Kid Care Medical Center">
+        <div class="hospital-info">
+          <h3>Kid Care Medical Center</h3>
+          <span>Pediatrics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Heart Life Institute" data-specialization="Cardiology">
+        <img src="../images/hospital45.jpg" alt="Heart Life Institute">
+        <div class="hospital-info">
+          <h3>Heart Life Institute</h3>
+          <span>Cardiology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Daily Health Hospital" data-specialization="General Medicine">
+        <img src="../images/hospital46.jpg" alt="Daily Health Hospital">
+        <div class="hospital-info">
+          <h3>Daily Health Hospital</h3>
+          <span>General Medicine</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Mother and Baby Hospital" data-specialization="Obstetrics & Gynecology">
+        <img src="../images/hospital47.jpg" alt="Mother and Baby Hospital">
+        <div class="hospital-info">
+          <h3>Mother and Baby Hospital</h3>
+          <span>Obstetrics & Gynecology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Motion Care Orthopedic Hospital" data-specialization="Orthopedics">
+        <img src="../images/hospital48.jpg" alt="Motion Care Orthopedic Hospital">
+        <div class="hospital-info">
+          <h3>Motion Care Orthopedic Hospital</h3>
+          <span>Orthopedics</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Neuro Care Institute" data-specialization="Neurology">
+        <img src="../images/hospital49.jpg" alt="Neuro Care Institute">
+        <div class="hospital-info">
+          <h3>Neuro Care Institute</h3>
+          <span>Neurology</span>
+        </div>
+      </div>
+
+      <div class="hospital-card" data-name="Life Saver Emergency Center" data-specialization="Emergency Medicine">
+        <img src="../images/hospital50.jpg" alt="Life Saver Emergency Center">
+        <div class="hospital-info">
+          <h3>Life Saver Emergency Center</h3>
+          <span>Emergency Medicine</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 FindMedKH. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const specializationFilter = document.getElementById("specializationFilter");
+    const cards = document.querySelectorAll(".hospital-card");
+
+    function filterHospitals() {
+      const searchValue = searchInput.value.toLowerCase();
+      const selectedSpecialization = specializationFilter.value;
+
+      cards.forEach(card => {
+        const hospitalName = card.dataset.name.toLowerCase();
+        const specialization = card.dataset.specialization;
+
+        const matchSearch = hospitalName.includes(searchValue);
+        const matchFilter =
+          selectedSpecialization === "all" || specialization === selectedSpecialization;
+
+        if (matchSearch && matchFilter) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    searchInput.addEventListener("input", filterHospitals);
+    specializationFilter.addEventListener("change", filterHospitals);
+  </script>
+</body>
+</html>

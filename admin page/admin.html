@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FindMedKH Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <h2>FindMedKH</h2>
+          <p>Admin Dashboard</p>
+        </div>
+
+        <ul class="menu">
+          <li class="menu-item active" data-section="dashboardSection">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+          </li>
+          <li class="menu-item" data-section="hospitalSection">
+            <i class="fa-solid fa-hospital"></i> Manage Hospitals
+          </li>
+          <li class="menu-item" data-section="specialtySection">
+            <i class="fa-solid fa-stethoscope"></i> Manage Specialties
+          </li>
+          <li class="menu-item" data-section="faqSection">
+            <i class="fa-solid fa-circle-question"></i> Manage FAQs
+          </li>
+          <li class="menu-item" data-section="messageSection">
+            <i class="fa-solid fa-envelope"></i> Contact Messages
+          </li>
+        </ul>
+      </div>
+
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+      <!-- DASHBOARD -->
+      <section id="dashboardSection" class="content-section active">
+        <div class="page-header">
+          <h1>Dashboard Overview</h1>
+          <p>Quick summary of your system data.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-hospital"></i></div>
+            <div>
+              <h3 id="totalHospitals">0</h3>
+              <p>Total Hospitals</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-stethoscope"></i></div>
+            <div>
+              <h3 id="totalSpecialties">0</h3>
+              <p>Total Specialties</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
+            <div>
+              <h3 id="totalPublic">0</h3>
+              <p>Public Hospitals</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-user-doctor"></i></div>
+            <div>
+              <h3 id="totalPrivate">0</h3>
+              <p>Private Hospitals</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-toggle-on"></i></div>
+            <div>
+              <h3 id="totalActive">0</h3>
+              <p>Active Hospitals</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <h3 id="totalMessages">0</h3>
+              <p>Contact Messages</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panels">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Recent Hospitals</h2>
+            </div>
+            <div id="recentHospitalsList" class="simple-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Specialty Overview</h2>
+            </div>
+            <div id="specialtyOverviewList" class="simple-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOSPITALS -->
+      <section id="hospitalSection" class="content-section">
+        <div class="page-header">
+          <h1>Manage Hospitals</h1>
+          <p>Add, edit, delete, search, and filter hospital information.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2 id="hospitalFormTitle">Add Hospital</h2>
+          </div>
+
+          <form id="hospitalForm">
+            <input type="hidden" id="editHospitalId" />
+
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Hospital Name</label>
+                <input type="text" id="hospitalName" required />
+              </div>
+
+              <div class="input-group">
+                <label>Hospital Type</label>
+                <select id="hospitalType" required>
+                  <option value="">Select Type</option>
+                  <option value="Public">Public</option>
+                  <option value="Private">Private</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label>Location / City</label>
+                <input type="text" id="hospitalLocation" required />
+              </div>
+
+              <div class="input-group">
+                <label>Address</label>
+                <input type="text" id="hospitalAddress" required />
+              </div>
+
+              <div class="input-group">
+                <label>Phone Number</label>
+                <input type="text" id="hospitalPhone" required />
+              </div>
+
+              <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="hospitalEmail" required />
+              </div>
+
+              <div class="input-group">
+                <label>Opening Hours</label>
+                <input type="text" id="hospitalHours" placeholder="Mon-Sun, 24 Hours" required />
+              </div>
+
+              <div class="input-group">
+                <label>Status</label>
+                <select id="hospitalStatus" required>
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+
+              <div class="input-group full-width">
+                <label>Image URL / Path</label>
+                <input type="text" id="hospitalImage" placeholder="../images/hospital1.jpg" required />
+              </div>
+
+              <div class="input-group full-width">
+                <label>Image Preview</label>
+                <div class="image-preview-wrap">
+                  <img id="hospitalImagePreview" src="" alt="Preview" />
+                </div>
+              </div>
+
+              <div class="input-group full-width">
+                <label>Emergency Available</label>
+                <select id="hospitalEmergency" required>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              <div class="input-group full-width">
+                <label>Specialties</label>
+                <div id="specialtyCheckboxes" class="checkbox-group"></div>
+              </div>
+
+              <div class="input-group full-width">
+                <label>Description</label>
+                <textarea id="hospitalDescription" rows="4" required></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn primary-btn">Save Hospital</button>
+              <button type="button" id="cancelHospitalEdit" class="btn secondary-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Hospital List</h2>
+          </div>
+
+          <div class="toolbar-grid">
+            <input type="text" id="hospitalSearch" placeholder="Search hospital name..." />
+            <select id="typeFilter">
+              <option value="all">All Types</option>
+              <option value="Public">Public</option>
+              <option value="Private">Private</option>
+            </select>
+            <input type="text" id="locationFilter" placeholder="Filter by location..." />
+            <select id="specialtyFilter">
+              <option value="all">All Specialties</option>
+            </select>
+            <select id="statusFilter">
+              <option value="all">All Status</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Location</th>
+                  <th>Specialties</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="hospitalTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPECIALTIES -->
+      <section id="specialtySection" class="content-section">
+        <div class="page-header">
+          <h1>Manage Specialties</h1>
+          <p>Add and remove medical specialties used in the hospital system.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Add Specialty</h2>
+          </div>
+
+          <form id="specialtyForm" class="inline-form">
+            <input type="text" id="specialtyInput" placeholder="Enter specialty name..." required />
+            <button type="submit" class="btn primary-btn">Add Specialty</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Specialty List</h2>
+          </div>
+          <div id="specialtyList" class="tag-list"></div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faqSection" class="content-section">
+        <div class="page-header">
+          <h1>Manage FAQs</h1>
+          <p>Add, edit, and remove frequently asked questions.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2 id="faqFormTitle">Add FAQ</h2>
+          </div>
+
+          <form id="faqForm">
+            <input type="hidden" id="editFaqId" />
+            <div class="form-grid">
+              <div class="input-group full-width">
+                <label>Question</label>
+                <input type="text" id="faqQuestion" required />
+              </div>
+
+              <div class="input-group full-width">
+                <label>Answer</label>
+                <textarea id="faqAnswer" rows="4" required></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn primary-btn">Save FAQ</button>
+              <button type="button" id="cancelFaqEdit" class="btn secondary-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>FAQ List</h2>
+          </div>
+          <div id="faqList" class="faq-list"></div>
+        </div>
+      </section>
+
+      <!-- MESSAGES -->
+      <section id="messageSection" class="content-section">
+        <div class="page-header">
+          <h1>Contact Messages</h1>
+          <p>Review user-submitted contact messages.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Inbox</h2>
+          </div>
+          <div id="messageList" class="message-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

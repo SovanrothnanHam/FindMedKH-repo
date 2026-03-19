@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FindMedKH - Login</title>
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="../home page/home.html" class="logo">FindMedKH</a>
+
+      <div class="nav-links">
+        <a href="../home page/home.html">Home</a>
+        <a href="../about page/about.html">About</a>
+        <a href="../chatbot page/chatbot.html">Chatbot</a>
+        <a href="../Hospitals/hos.html">Hospitals</a>
+        <a href="../FAQs/FAQs.html">FAQs</a>
+        <a href="../login page/login.html" class="login-btn active">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="login-page">
+    <div class="login-card">
+      <div class="login-left">
+        <h1>Welcome Back</h1>
+        <p>
+          Login as a user to explore hospitals, or as an admin to manage hospital information.
+        </p>
+      </div>
+
+      <div class="login-right">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+          </div>
+
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+          </div>
+
+          <button type="submit" class="login-submit">Login</button>
+          <p id="loginMessage" class="login-message"></p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+  <script src="../login page/login.js"></script>
+</body>
+</html>

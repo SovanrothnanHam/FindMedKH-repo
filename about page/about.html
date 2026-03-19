@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About us - page</title>
+        <link rel="stylesheet" href="about.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+            <nav>
+        <a href="index.html" class="logo">FindMedKH</a>
+
+        <div class="nav-links">
+            <a href="../home page/home.html">Home</a>
+            <a href="../about page/about.html">About</a>
+            <a href="../chatbot page/chatbot.html">Chatbot</a>
+            <a href="../Hospitals/hos.html">Hospitals</a>
+            <a href="../FAQs/FAQs.html">FAQs</a>
+            <a href="../login page/login.html" class="login-btn">Login</a>
+        </div>
+    </nav>
+    </header>
+
+ <!-- HERO -->
+<section class="about-hero">
+    <h1>About FindMedKH</h1>
+    <p>Revolutionizing Hospital Discovery in Cambodia</p>
+</section>
+
+
+<!-- WHO WE ARE -->
+<section class="about-section reveal">
+    <div class="about-box">
+        <i class="fas fa-hospital"></i>
+        <h2>Who We Are</h2>
+        <p>
+            FindMedKH is a modern healthcare technology platform built to simplify how people in Cambodia
+            search for hospitals. We combine intelligent systems with medical data to ensure patients
+            connect with the right healthcare providers faster and easier than ever before.
+        </p>
+    </div>
+
+    <div class="about-box">
+        <i class="fas fa-bullseye"></i>
+        <h2>Our Mission</h2>
+        <p>
+            Our mission is to reduce confusion during medical emergencies by providing
+            accurate, fast, and AI-powered hospital recommendations based on symptoms,
+            specialization, and location.
+        </p>
+    </div>
+
+    <div class="about-box">
+        <i class="fas fa-eye"></i>
+        <h2>Our Vision</h2>
+        <p>
+            We envision a smarter Cambodia where technology bridges the gap between
+            patients and healthcare services — empowering people with reliable
+            information at their fingertips.
+        </p>
+    </div>
+</section>
+
+
+<!-- WHY CHOOSE US -->
+<section class="why-choose reveal">
+    <h2>Why Choose FindMedKH?</h2>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+            <i class="fas fa-robot"></i>
+            <h3>AI-Powered Chatbot</h3>
+            <p>Smart symptom analysis and instant hospital recommendations.</p>
+        </div>
+
+        <div class="why-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>Location Based Search</h3>
+            <p>Find nearby hospitals quickly and efficiently.</p>
+        </div>
+
+        <div class="why-card">
+            <i class="fas fa-database"></i>
+            <h3>Reliable Medical Data</h3>
+            <p>Structured hospital database for accurate results.</p>
+        </div>
+
+        <div class="why-card">
+            <i class="fas fa-clock"></i>
+            <h3>Fast & Easy</h3>
+            <p>User-friendly interface designed for quick decisions.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- CHATBOT SECTION -->
+<section class="chatbot-section reveal">
+    <div class="chatbot-content">
+        <div class="chatbot-icon">
+            <i class="fas fa-comments"></i>
+        </div>
+
+        <div>
+            <h2>Meet Our AI Assistant</h2>
+            <p>
+                Our intelligent chatbot is designed to understand user symptoms,
+                suggest relevant medical specializations, and recommend hospitals
+                instantly. It’s like having a digital healthcare assistant available 24/7.
+            </p>
+
+            <a href="../chatbot page/chatbot.html" class="chatbot-btn">
+                Start Chat Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact & Info Section -->
+<section class="contact-wrapper">
+
+    <div class="contact-left">
+        <h2>Contact Us</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <div class="contact-right">
+        <h3>Connect With Us</h3>
+
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <div class="important-links">
+            <h4>Important Links</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="chatbot.html">Chat with Doctor</a></li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <p><strong>Email:</strong> support@findmedkh.com</p>
+            <p><strong>Phone:</strong> +855 12 345 678</p>
+            <p><strong>Location:</strong> Phnom Penh, Cambodia</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- SCROLL REVEAL SCRIPT -->
+<script>
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 100;
+
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+
+    window.addEventListener("scroll", reveal);
+</script>
+
+<button id="backToTop">↑</button>
+<script>
+const backToTop = document.getElementById("backToTop");
+
+window.onscroll = function() {
+    if (document.documentElement.scrollTop > 300) {
+        backToTop.style.display = "block";
+    } else {
+        backToTop.style.display = "none";
+    }
+};
+
+backToTop.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+</script>
+<a href="../chatbot page/chatbot.html" class="chatbot-float">
+    💬
+</a>
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 FindMedKH. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

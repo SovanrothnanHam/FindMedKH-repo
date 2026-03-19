@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - page</title>
+    <link rel="stylesheet" href="FAQ.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+            <nav>
+        <a href="index.html" class="logo">FindMedKH</a>
+
+        <div class="nav-links">
+            <a href="../home page/home.html">Home</a>
+            <a href="../about page/about.html">About</a>
+            <a href="../chatbot page/chatbot.html">Chatbot</a>
+            <a href="../Hospitals/hos.html">Hospitals</a>
+            <a href="../FAQs/FAQs.html">FAQs</a>
+            <a href="../login page/login.html" class="login-btn">Login</a>
+        </div>
+    </nav>
+    </header>
+
+    <!-- HERO -->
+<section class="faq-hero">
+    <h1>Frequently Asked Questions</h1>
+    <p>Your Questions About FindMedKH — Answered</p>
+</section>
+
+
+<!-- FAQ SECTION -->
+<section class="faq-container">
+
+    <!-- FAQ 1 -->
+    <div class="faq-card">
+        <div class="faq-header">
+            <img src="https://i.pravatar.cc/60?img=12" alt="User">
+            <div>
+                <h3>How does FindMedKH recommend hospitals?</h3>
+                <span>Posted on February 20, 2026</span>
+            </div>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="faq-body">
+            <p>
+                Our system analyzes your symptoms and matches them with medical
+                specializations in our hospital database. The AI chatbot then
+                recommends hospitals that best fit your needs and location.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- FAQ 2 -->
+    <div class="faq-card">
+        <div class="faq-header">
+            <img src="https://i.pravatar.cc/60?img=32" alt="User">
+            <div>
+                <h3>Is the chatbot a real doctor?</h3>
+                <span>Posted on February 18, 2026</span>
+            </div>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="faq-body">
+            <p>
+                No. Our chatbot is an AI assistant designed to provide hospital
+                recommendations based on symptoms. It does not replace professional
+                medical advice from licensed doctors.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- FAQ 3 -->
+    <div class="faq-card">
+        <div class="faq-header">
+            <img src="https://i.pravatar.cc/60?img=5" alt="User">
+            <div>
+                <h3>Is FindMedKH free to use?</h3>
+                <span>Posted on February 15, 2026</span>
+            </div>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="faq-body">
+            <p>
+                Yes. FindMedKH is completely free for users searching for hospital
+                recommendations and medical information.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- FAQ 4 -->
+    <div class="faq-card">
+        <div class="faq-header">
+            <img src="https://i.pravatar.cc/60?img=25" alt="User">
+            <div>
+                <h3>Can I search hospitals by location?</h3>
+                <span>Posted on February 12, 2026</span>
+            </div>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="faq-body">
+            <p>
+                Yes. You can search hospitals based on city or nearby location,
+                helping you find the most convenient healthcare provider.
+            </p>
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- FAQ TOGGLE SCRIPT -->
+<script>
+    const faqCards = document.querySelectorAll(".faq-card");
+
+    faqCards.forEach(card => {
+        card.querySelector(".faq-header").addEventListener("click", () => {
+            card.classList.toggle("active");
+        });
+    });
+</script>
+
+<!-- Contact & Info Section -->
+<section class="contact-wrapper">
+
+    <div class="contact-left">
+        <h2>Contact Us</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <div class="contact-right">
+        <h3>Connect With Us</h3>
+
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <div class="important-links">
+            <h4>Important Links</h4>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="faq.html">FAQs</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="chatbot.html">Chat with Doctor</a></li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <p><strong>Email:</strong> support@findmedkh.com</p>
+            <p><strong>Phone:</strong> +855 12 345 678</p>
+            <p><strong>Location:</strong> Phnom Penh, Cambodia</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- SCROLL REVEAL SCRIPT -->
+<script>
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 100;
+
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+
+    window.addEventListener("scroll", reveal);
+</script>
+
+<button id="backToTop">↑</button>
+<script>
+const backToTop = document.getElementById("backToTop");
+
+window.onscroll = function() {
+    if (document.documentElement.scrollTop > 300) {
+        backToTop.style.display = "block";
+    } else {
+        backToTop.style.display = "none";
+    }
+};
+
+backToTop.onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+</script>
+<a href="../chatbot page/chatbot.html" class="chatbot-float">
+    💬
+</a>
+
+
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 FindMedKH. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FindMedKH - Chatbot</title>
+  <link rel="stylesheet" href="../chatbot page/chat.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav>
+      <a href="../home page/home.html" class="logo">FindMedKH</a>
+
+      <div class="nav-links">
+        <a href="../home page/home.html">Home</a>
+        <a href="../about page/about.html">About</a>
+        <a href="../chatbot page/chatbot.html" class="active">Chatbot</a>
+        <a href="../Hospitals/hos.html">Hospitals</a>
+        <a href="../FAQs/FAQs.html">FAQs</a>
+        <a href="../login page/login.html" class="login-btn">Login</a>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- CHAT SECTION -->
+  <section class="chat-page">
+
+    <!-- LEFT HISTORY PANEL -->
+    <aside class="history-panel">
+      <div class="history-header">
+        <h2>Chat History</h2>
+        <button class="new-chat-btn">+ New Chat</button>
+      </div>
+
+      <div class="history-list">
+        <div class="history-item active">
+          <i class="fa-regular fa-message"></i>
+          <div>
+            <h4>Fever and sore throat</h4>
+            <p>Today</p>
+          </div>
+        </div>
+
+        <div class="history-item">
+          <i class="fa-regular fa-message"></i>
+          <div>
+            <h4>Chest pain advice</h4>
+            <p>Yesterday</p>
+          </div>
+        </div>
+
+        <div class="history-item">
+          <i class="fa-regular fa-message"></i>
+          <div>
+            <h4>Skin rash symptoms</h4>
+            <p>2 days ago</p>
+          </div>
+        </div>
+
+        <div class="history-item">
+          <i class="fa-regular fa-message"></i>
+          <div>
+            <h4>Hospital recommendation</h4>
+            <p>Last week</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CHAT AREA -->
+    <main class="chat-main">
+      <div class="chat-box-wrapper">
+        <div class="chat-header">
+          <div class="bot-profile">
+            <div class="bot-avatar">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div>
+              <h3>FindMedKH Assistant</h3>
+              <p>Online now</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+          <div class="message bot-message">
+            <div class="message-content">
+              Hello 👋 Welcome to FindMedKH. Please tell me your symptoms.
+            </div>
+          </div>
+
+          <div class="message user-message">
+            <div class="message-content">
+              I have a fever and sore throat.
+            </div>
+          </div>
+
+          <div class="message bot-message">
+            <div class="message-content">
+              Based on your symptoms, you may need to consult <strong>General Medicine</strong>
+              or <strong>ENT</strong>. If symptoms become severe, seek medical care immediately.
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <button onclick="addQuickMessage('I have chest pain')">Chest Pain</button>
+          <button onclick="addQuickMessage('I have headache and dizziness')">Headache</button>
+          <button onclick="addQuickMessage('I have stomach pain')">Stomach Pain</button>
+          <button onclick="addQuickMessage('I have skin rash')">Skin Rash</button>
+        </div>
+
+        <div class="chat-input-area">
+          <input type="text" id="userInput" placeholder="Type your symptoms here..." />
+          <button onclick="sendMessage()">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+
+  </section>
+
+  <button id="backToTop">↑</button>
+
+  <footer>
+    <p>© 2026 FindMedKH. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const backToTop = document.getElementById("backToTop");
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
+
+    window.onscroll = function () {
+      if (document.documentElement.scrollTop > 200) {
+        backToTop.style.display = "block";
+      } else {
+        backToTop.style.display = "none";
+      }
+    };
+
+    backToTop.onclick = function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (text === "") return;
+
+      const userMessage = document.createElement("div");
+      userMessage.classList.add("message", "user-message");
+      userMessage.innerHTML = `<div class="message-content">${text}</div>`;
+      chatBox.appendChild(userMessage);
+
+      let botReply = "Based on your symptoms, I recommend consulting the appropriate specialist.";
+      const lowerText = text.toLowerCase();
+
+      if (lowerText.includes("chest pain")) {
+        botReply = "Your symptoms may require <strong>Cardiology</strong> or <strong>Emergency Medicine</strong>. Please seek immediate care if the pain is severe.";
+      } else if (lowerText.includes("fever") || lowerText.includes("sore throat")) {
+        botReply = "You may need <strong>General Medicine</strong> or <strong>ENT</strong> consultation.";
+      } else if (lowerText.includes("headache") || lowerText.includes("dizziness")) {
+        botReply = "You may need to consult <strong>Neurology</strong> or <strong>General Medicine</strong> depending on severity.";
+      } else if (lowerText.includes("skin rash")) {
+        botReply = "You may need <strong>Dermatology</strong> consultation.";
+      } else if (lowerText.includes("stomach") || lowerText.includes("abdominal")) {
+        botReply = "You may need <strong>General Medicine</strong> or <strong>Surgery</strong> if the pain is severe.";
+      }
+
+      const botMessage = document.createElement("div");
+      botMessage.classList.add("message", "bot-message");
+      botMessage.innerHTML = `<div class="message-content">${botReply}</div>`;
+
+      setTimeout(() => {
+        chatBox.appendChild(botMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 400);
+
+      userInput.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function addQuickMessage(text) {
+      userInput.value = text;
+      sendMessage();
+    }
+
+    userInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+  </script>
+
+</body>
+</html>
