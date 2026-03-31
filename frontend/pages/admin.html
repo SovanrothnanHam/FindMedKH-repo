@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin Dashboard – FindMEDKH</title>
+  <link rel="stylesheet" href="../assets/css/shared.css"/>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       PAGE STYLES: admin.html
+       TO CUSTOMIZE:
+       • Sidebar color: edit background in .admin-sidebar
+       • Active nav item: edit .admin-nav-item.active styles
+       • Table style: edit th/td selectors below
+       • Stat cards: edit .stat-box styles
+    ═══════════════════════════════════════════════════════════════ */
+    body { background: var(--sky-xpale); }
+    .admin-layout { display:flex; min-height:calc(100vh - var(--navbar-h)); }
+
+    /* ── LEFT SIDEBAR ── TO CHANGE COLOR: edit background */
+    .admin-sidebar {
+      width:230px; flex-shrink:0; padding:1.5rem 0;
+      background: linear-gradient(180deg, var(--sky-dark) 0%, var(--navy) 100%);
+      color:var(--white);
+    }
+    .admin-nav-section { font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.35); padding:.6rem 1.4rem .3rem; margin-top:.4rem; }
+    .admin-nav-item {
+      display:flex; align-items:center; gap:.7rem; padding:.72rem 1.4rem;
+      cursor:pointer; font-size:.9rem; font-weight:500; color:rgba(255,255,255,.7);
+      border-left:3px solid transparent; transition:all var(--t);
+    }
+    .admin-nav-item:hover { background:rgba(255,255,255,.08); color:var(--white); }
+    /* Active sidebar item — TO CHANGE ACCENT: edit border-left-color */
+    .admin-nav-item.active { background:rgba(255,255,255,.12); color:var(--white); border-left-color:var(--gold); }
+    .admin-nav-icon { font-size:1.05rem; width:20px; text-align:center; }
+
+    /* ── MAIN CONTENT AREA ── */
+    .admin-main { flex:1; overflow:auto; padding:2rem; }
+
+    /* ── STAT BOXES ── TO CHANGE COLORS: edit border-left-color */
+    .stats-row { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-bottom:2rem; }
+    .stat-box { background:var(--white); border-radius:var(--r-md); padding:1.3rem; border:1px solid var(--border); border-left:4px solid var(--sky); }
+    .stat-box .sb-icon { font-size:1.5rem; margin-bottom:.5rem; }
+    .stat-box .sb-num  { font-family:'Fraunces',serif; font-size:2rem; color:var(--sky-dark); }
+    .stat-box .sb-lbl  { font-size:.76rem; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.05em; margin-top:.2rem; }
+
+    /* ── PANELS (one per section) ── */
+    .panel { background:var(--white); border-radius:var(--r-lg); border:1px solid var(--border); overflow:hidden; display:none; }
+    .panel.active { display:block; }
+    .panel-header { padding:1.2rem 1.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; background:var(--sky-xpale); }
+    .panel-title { font-family:'Fraunces',serif; font-size:1.15rem; color:var(--sky-dark); }
+    .panel-toolbar { display:flex; gap:.6rem; align-items:center; flex-wrap:wrap; }
+    .panel-toolbar input, .panel-toolbar select { padding:.5rem .9rem; border:1.5px solid var(--border); border-radius:var(--r-btn); font-family:'Plus Jakarta Sans',sans-serif; font-size:.85rem; outline:none; }
+    .panel-toolbar input:focus, .panel-toolbar select:focus { border-color:var(--sky); }
+
+    /* ── DATA TABLE ── */
+    .tbl-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th { background:var(--sky-xpale); font-size:.73rem; text-transform:uppercase; letter-spacing:.06em; color:var(--sky-dark); font-weight:700; padding:.8rem 1rem; text-align:left; border-bottom:2px solid var(--sky-light); white-space:nowrap; }
+    td { padding:.75rem 1rem; border-bottom:1px solid var(--border); font-size:.88rem; vertical-align:middle; }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:var(--sky-xpale); }
+    .td-name  { font-weight:600; color:var(--sky-dark); }
+    .td-muted { color:var(--ink-muted); font-size:.82rem; }
+    .td-actions { display:flex; gap:.4rem; }
+
+    /* ── MODAL FORM GRID ── */
+    .modal h3 { margin-bottom:1.5rem; color:var(--sky-dark); font-family:'Fraunces',serif; }
+    /* Two-column form grid inside modal */
+    .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    .modal-grid .full { grid-column:1/-1; }
+    /* Specialty checkbox list inside hospital modal */
+    .spec-check-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.35rem; max-height:200px; overflow-y:auto; border:1.5px solid var(--border); border-radius:var(--r-md); padding:.7rem; }
+    .spec-check { display:flex; align-items:center; gap:.5rem; font-size:.82rem; cursor:pointer; }
+    .spec-check input { cursor:pointer; accent-color:var(--sky); }
+
+    .loading { text-align:center; padding:3rem; color:var(--ink-muted); }
+    @media(max-width:960px){ .stats-row{grid-template-columns:repeat(3,1fr);} .admin-sidebar{width:52px;} .admin-nav-item span,.admin-nav-section{display:none;} }
+    @media(max-width:640px){ .stats-row{grid-template-columns:1fr 1fr;} .admin-main{padding:1rem;} }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="admin-layout">
+
+    <!-- ── LEFT SIDEBAR NAVIGATION ───────────────────────────────────────
+         TO ADD A MENU ITEM: copy .admin-nav-item, set onclick='switchPanel("newname",this)'
+         Then add a .panel div with id="panel-newname" in the main area.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <aside class="admin-sidebar">
+      <div class="admin-nav-section">Overview</div>
+      <div class="admin-nav-item active" onclick="switchPanel('dashboard',this)">
+        <span class="admin-nav-icon">📊</span><span>Dashboard</span>
+      </div>
+      <div class="admin-nav-section">Manage</div>
+      <div class="admin-nav-item" onclick="switchPanel('hospitals',this)">
+        <span class="admin-nav-icon">🏥</span><span>Hospitals</span>
+      </div>
+      <div class="admin-nav-item" onclick="switchPanel('specialties',this)">
+        <span class="admin-nav-icon">🩺</span><span>Specialties</span>
+      </div>
+      <div class="admin-nav-item" onclick="switchPanel('users',this)">
+        <span class="admin-nav-icon">👥</span><span>Users</span>
+      </div>
+    </aside>
+
+    <!-- ── MAIN PANELS ── -->
+    <main class="admin-main">
+
+      <!-- DASHBOARD PANEL -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="panel-header"><span class="panel-title">📊 Dashboard Overview</span></div>
+        <div style="padding:1.5rem">
+          <!-- Stats loaded from GET /admin/stats -->
+          <div class="stats-row">
+            <div class="stat-box"><div class="sb-icon">🏥</div><div class="sb-num" id="st-hosp">—</div><div class="sb-lbl">Hospitals</div></div>
+            <div class="stat-box" style="border-left-color:var(--mint)"><div class="sb-icon">🏛</div><div class="sb-num" id="st-pub">—</div><div class="sb-lbl">Public</div></div>
+            <div class="stat-box" style="border-left-color:var(--coral)"><div class="sb-icon">🏢</div><div class="sb-num" id="st-priv">—</div><div class="sb-lbl">Private</div></div>
+            <div class="stat-box" style="border-left-color:var(--gold)"><div class="sb-icon">👥</div><div class="sb-num" id="st-users">—</div><div class="sb-lbl">Users</div></div>
+            <div class="stat-box" style="border-left-color:var(--navy)"><div class="sb-icon">💬</div><div class="sb-num" id="st-msgs">—</div><div class="sb-lbl">Messages</div></div>
+          </div>
+          <p style="color:var(--ink-muted);font-size:.88rem">Use the sidebar to manage hospitals, specialties, and users. All changes are saved to the database in real time.</p>
+        </div>
+      </div>
+
+      <!-- HOSPITALS PANEL -->
+      <div class="panel" id="panel-hospitals">
+        <div class="panel-header">
+          <span class="panel-title">🏥 Hospitals</span>
+          <div class="panel-toolbar">
+            <input id="hSearch" placeholder="Search name…" oninput="loadHospitals()"/>
+            <select id="hTypeF" onchange="loadHospitals()">
+              <option value="">All Types</option>
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+            <!-- TO CHANGE ADD BUTTON: edit text here -->
+            <button class="btn btn-primary btn-sm" onclick="openHospModal()">+ Add Hospital</button>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Type</th><th>Phone</th><th>Hours</th><th>Specialties</th><th>Actions</th></tr></thead>
+            <tbody id="hospTbody"><tr><td colspan="6" class="loading">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SPECIALTIES PANEL -->
+      <div class="panel" id="panel-specialties">
+        <div class="panel-header">
+          <span class="panel-title">🩺 Specialties</span>
+          <button class="btn btn-primary btn-sm" onclick="openSpecModal()">+ Add Specialty</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Description</th><th>Keywords</th><th>Actions</th></tr></thead>
+            <tbody id="specTbody"><tr><td colspan="5" class="loading">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- USERS PANEL -->
+      <div class="panel" id="panel-users">
+        <div class="panel-header"><span class="panel-title">👥 Users</span></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
+            <tbody id="usersTbody"><tr><td colspan="6" class="loading">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── HOSPITAL MODAL (Add/Edit) ─────────────────────────────────────────
+       TO ADD A FIELD: add .form-group inside .modal-grid, then handle in saveHospital()
+  ──────────────────────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="hospModal">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('hospModal')">✕</button>
+      <h3 id="hospModalTitle">Add Hospital</h3>
+      <input type="hidden" id="hospId"/>
+      <div class="modal-grid">
+        <div class="form-group full"><label>Hospital Name *</label><input id="hName" placeholder="Full hospital name"/></div>
+        <div class="form-group"><label>Type *</label><select id="hType2"><option value="public">Public</option><option value="private">Private</option></select></div>
+        <div class="form-group"><label>Phone</label><input id="hPhone" placeholder="023 xxx xxx"/></div>
+        <div class="form-group full"><label>Address</label><input id="hAddr" placeholder="Street address, Phnom Penh"/></div>
+        <div class="form-group"><label>Latitude</label><input id="hLat" type="number" step="any" placeholder="11.5564"/></div>
+        <div class="form-group"><label>Longitude</label><input id="hLon" type="number" step="any" placeholder="104.9282"/></div>
+        <div class="form-group"><label>Opening Hours</label><input id="hHours" placeholder="24 hours"/></div>
+        <div class="form-group"><label>Website URL</label><input id="hWeb" placeholder="https://…"/></div>
+        <div class="form-group full"><label>Description</label><input id="hDesc" placeholder="Brief description of this hospital"/></div>
+        <div class="form-group full">
+          <label>Specialties (check all that apply)</label>
+          <!-- Checkboxes injected here by renderSpecChecks() -->
+          <div class="spec-check-grid" id="specChecks">Loading…</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:.7rem;margin-top:1.2rem;">
+        <button class="btn btn-primary btn-full" onclick="saveHospital()">Save Hospital</button>
+        <button class="btn btn-ghost" onclick="closeModal('hospModal')" style="flex-shrink:0">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SPECIALTY MODAL (Add/Edit) ── -->
+  <div class="modal-overlay" id="specModal">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('specModal')">✕</button>
+      <h3 id="specModalTitle">Add Specialty</h3>
+      <input type="hidden" id="specId"/>
+      <div class="form-group"><label>Specialty Name *</label><input id="sName" placeholder="e.g. Cardiology"/></div>
+      <div class="form-group"><label>Description</label><input id="sDesc" placeholder="Brief description"/></div>
+      <div class="form-group"><label>Keywords (comma-separated)</label><input id="sKeys" placeholder="heart, cardiac, chest pain"/></div>
+      <div style="display:flex;gap:.7rem;margin-top:.5rem;">
+        <button class="btn btn-primary btn-full" onclick="saveSpecialty()">Save Specialty</button>
+        <button class="btn btn-ghost" onclick="closeModal('specModal')" style="flex-shrink:0">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONFIRM DELETE MODAL ── -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:380px;text-align:center;">
+      <h3 style="margin-bottom:.8rem;color:var(--danger)">⚠️ Confirm Delete</h3>
+      <p style="color:var(--ink-muted);margin-bottom:1.5rem" id="confirmMsg">Are you sure you want to delete this?</p>
+      <div style="display:flex;gap:.7rem;">
+        <button class="btn btn-danger btn-full" id="confirmBtn">Yes, Delete</button>
+        <button class="btn btn-ghost btn-full" onclick="closeModal('confirmModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="../assets/js/shared.js"></script>
+  <script>
+    renderNavbar('admin');
+
+    /* ── ADMIN AUTH GUARD ────────────────────────────────────────────────
+       Redirects non-admin users away from this page.
+       The backend also enforces admin-only on all /admin/* endpoints.
+    ─────────────────────────────────────────────────────────────────── */
+    if (!isAdmin()) {
+      toast('Admin access required', 'error');
+      window.location.href = '../index.html';
+    }
+
+    /* In-memory cache of specialties for the checkbox list */
+    let allSpecs = [];
+
+    /* ── PANEL SWITCHER ──────────────────────────────────────────────── */
+    function switchPanel(name, el) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      el.classList.add('active');
+      /* Load data for the selected panel */
+      if (name === 'hospitals')   loadHospitals();
+      if (name === 'specialties') loadSpecialties();
+      if (name === 'users')       loadUsers();
+    }
+
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+    /* ── DASHBOARD STATS ── Calls GET /admin/stats ──────────────────── */
+    async function loadStats() {
+      try {
+        const d = await apiFetch('/admin/stats');
+        document.getElementById('st-hosp').textContent  = d.total_hospitals;
+        document.getElementById('st-pub').textContent   = d.public;
+        document.getElementById('st-priv').textContent  = d.private;
+        document.getElementById('st-users').textContent = d.total_users;
+        document.getElementById('st-msgs').textContent  = d.total_messages;
+      } catch(e) { toast('Could not load stats: ' + e.message, 'error'); }
+    }
+
+    /* ── HOSPITALS ───────────────────────────────────────────────────── */
+    async function loadHospitals() {
+      const search = document.getElementById('hSearch')?.value || '';
+      const type   = document.getElementById('hTypeF')?.value || '';
+      try {
+        let hospitals = await apiFetch('/admin/hospitals');
+        /* Client-side filter (backend returns all) */
+        if (search) hospitals = hospitals.filter(h => h.name.toLowerCase().includes(search.toLowerCase()));
+        if (type)   hospitals = hospitals.filter(h => h.hospital_type === type);
+
+        document.getElementById('hospTbody').innerHTML = hospitals.map(h => `
+          <tr>
+            <td>
+              <div class="td-name">${esc(h.name)}</div>
+              <div class="td-muted">${esc(h.address || '')}</div>
+            </td>
+            <td><span class="badge badge-${h.hospital_type}">${h.hospital_type}</span></td>
+            <td class="td-muted">${esc(h.phone || '—')}</td>
+            <td class="td-muted">${esc(h.opening_hours || '—')}</td>
+            <td>
+              <div style="display:flex;flex-wrap:wrap;gap:.25rem">
+                ${(h.specialties||[]).slice(0,3).map(s => `<span class="badge badge-private" style="font-size:.68rem">${esc(s)}</span>`).join('')}
+                ${(h.specialties||[]).length > 3 ? `<span class="badge" style="font-size:.68rem;background:var(--border)">+${h.specialties.length-3}</span>` : ''}
+              </div>
+            </td>
+            <td>
+              <div class="td-actions">
+                <button class="btn btn-ghost btn-sm" onclick="editHospital(${h.hospital_id})">✏ Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmDelete('hospital',${h.hospital_id},'${esc(h.name)}')">🗑</button>
+              </div>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--ink-muted)">No hospitals found</td></tr>';
+      } catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    /* Load all specialties into the checkbox list inside hospital modal */
+    async function loadAllSpecs() {
+      try { allSpecs = await apiFetch('/admin/specialties'); } catch(e) {}
+    }
+
+    function renderSpecChecks(selectedNames = []) {
+      document.getElementById('specChecks').innerHTML = allSpecs.map(s => `
+        <label class="spec-check">
+          <input type="checkbox" value="${s.specialty_id}" ${selectedNames.includes(s.specialty_name) ? 'checked' : ''}/>
+          ${esc(s.specialty_name)}
+        </label>`).join('');
+    }
+
+    /* Open hospital modal for add (no arg) or edit (with hospital object) */
+    function openHospModal(h = null) {
+      document.getElementById('hospId').value = h ? h.hospital_id : '';
+      document.getElementById('hospModalTitle').textContent = h ? 'Edit Hospital' : 'Add Hospital';
+      document.getElementById('hName').value  = h?.name || '';
+      document.getElementById('hType2').value = h?.hospital_type || 'private';
+      document.getElementById('hPhone').value = h?.phone || '';
+      document.getElementById('hAddr').value  = h?.address || '';
+      document.getElementById('hLat').value   = h?.latitude || '';
+      document.getElementById('hLon').value   = h?.longitude || '';
+      document.getElementById('hHours').value = h?.opening_hours || '';
+      document.getElementById('hWeb').value   = h?.website || '';
+      document.getElementById('hDesc').value  = h?.description || '';
+      renderSpecChecks(h?.specialties || []);
+      openModal('hospModal');
+    }
+
+    async function editHospital(id) {
+      try { const h = await apiFetch(`/admin/hospitals/${id}`); openHospModal(h); }
+      catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    async function saveHospital() {
+      const id = document.getElementById('hospId').value;
+      /* Collect selected specialty IDs from checkboxes */
+      const specialty_ids = [...document.querySelectorAll('#specChecks input:checked')].map(i => parseInt(i.value));
+      const payload = {
+        name:          document.getElementById('hName').value.trim(),
+        hospital_type: document.getElementById('hType2').value,
+        phone:         document.getElementById('hPhone').value.trim() || null,
+        address:       document.getElementById('hAddr').value.trim() || null,
+        latitude:      parseFloat(document.getElementById('hLat').value) || null,
+        longitude:     parseFloat(document.getElementById('hLon').value) || null,
+        opening_hours: document.getElementById('hHours').value.trim() || null,
+        website:       document.getElementById('hWeb').value.trim() || null,
+        description:   document.getElementById('hDesc').value.trim() || null,
+        city:          'Phnom Penh',
+        specialty_ids,
+      };
+      if (!payload.name) { toast('Hospital name is required', 'error'); return; }
+      try {
+        if (id) await apiFetch(`/admin/hospitals/${id}`, { method:'PUT', body:JSON.stringify(payload) });
+        else    await apiFetch('/admin/hospitals',        { method:'POST',body:JSON.stringify(payload) });
+        toast(id ? 'Hospital updated!' : 'Hospital created!', 'success');
+        closeModal('hospModal'); loadHospitals(); loadStats();
+      } catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    /* ── SPECIALTIES ─────────────────────────────────────────────────── */
+    async function loadSpecialties() {
+      try {
+        const specs = await apiFetch('/admin/specialties');
+        allSpecs = specs;
+        document.getElementById('specTbody').innerHTML = specs.map(s => `
+          <tr>
+            <td class="td-muted">${s.specialty_id}</td>
+            <td class="td-name">${esc(s.specialty_name)}</td>
+            <td class="td-muted">${esc(s.description || '—')}</td>
+            <td class="td-muted" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(s.keywords||'')}">${esc(s.keywords || '—')}</td>
+            <td><div class="td-actions">
+              <button class="btn btn-ghost btn-sm" onclick="editSpec(${s.specialty_id},'${esc(s.specialty_name)}','${esc(s.description||'')}','${esc(s.keywords||'')}')">✏ Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="confirmDelete('specialty',${s.specialty_id},'${esc(s.specialty_name)}')">🗑</button>
+            </div></td>
+          </tr>`).join('');
+      } catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    function openSpecModal() {
+      document.getElementById('specId').value = '';
+      document.getElementById('specModalTitle').textContent = 'Add Specialty';
+      ['sName','sDesc','sKeys'].forEach(id => document.getElementById(id).value = '');
+      openModal('specModal');
+    }
+
+    function editSpec(id, name, desc, keys) {
+      document.getElementById('specId').value = id;
+      document.getElementById('specModalTitle').textContent = 'Edit Specialty';
+      document.getElementById('sName').value = name;
+      document.getElementById('sDesc').value = desc;
+      document.getElementById('sKeys').value = keys;
+      openModal('specModal');
+    }
+
+    async function saveSpecialty() {
+      const id = document.getElementById('specId').value;
+      const payload = {
+        specialty_name: document.getElementById('sName').value.trim(),
+        description:    document.getElementById('sDesc').value.trim() || null,
+        keywords:       document.getElementById('sKeys').value.trim() || null,
+      };
+      if (!payload.specialty_name) { toast('Specialty name required', 'error'); return; }
+      try {
+        if (id) await apiFetch(`/admin/specialties/${id}`, { method:'PUT', body:JSON.stringify(payload) });
+        else    await apiFetch('/admin/specialties',        { method:'POST',body:JSON.stringify(payload) });
+        toast(id ? 'Specialty updated!' : 'Specialty created!', 'success');
+        closeModal('specModal'); loadSpecialties();
+      } catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    /* ── USERS ───────────────────────────────────────────────────────── */
+    async function loadUsers() {
+      try {
+        const users = await apiFetch('/admin/users');
+        document.getElementById('usersTbody').innerHTML = users.map(u => `
+          <tr>
+            <td class="td-muted">${u.user_id}</td>
+            <td class="td-name">${esc(u.full_name || '—')}</td>
+            <td class="td-muted">${esc(u.email)}</td>
+            <td><span class="badge ${u.role==='admin'?'badge-gold':'badge-private'}">${u.role}</span></td>
+            <td class="td-muted">${u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
+            <td>${u.role !== 'admin'
+              ? `<button class="btn btn-danger btn-sm" onclick="confirmDelete('user',${u.user_id},'${esc(u.email)}')">🗑 Delete</button>`
+              : '<span class="td-muted" style="font-size:.78rem">Protected</span>'}</td>
+          </tr>`).join('');
+      } catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    /* ── CONFIRM DELETE ──────────────────────────────────────────────── */
+    function confirmDelete(type, id, name) {
+      document.getElementById('confirmMsg').textContent = `Delete ${type} "${name}"? This cannot be undone.`;
+      document.getElementById('confirmBtn').onclick = () => doDelete(type, id);
+      openModal('confirmModal');
+    }
+
+    async function doDelete(type, id) {
+      const paths = { hospital: `/admin/hospitals/${id}`, specialty: `/admin/specialties/${id}`, user: `/admin/users/${id}` };
+      try {
+        await apiFetch(paths[type], { method:'DELETE' });
+        toast('Deleted successfully', 'success');
+        closeModal('confirmModal');
+        if (type === 'hospital')   { loadHospitals(); loadStats(); }
+        if (type === 'specialty')  loadSpecialties();
+        if (type === 'user')       { loadUsers(); loadStats(); }
+      } catch(e) { toast('Error: ' + e.message, 'error'); }
+    }
+
+    /* Initialize on page load */
+    loadStats();
+    loadAllSpecs();
+  </script>
+</body>
+</html>

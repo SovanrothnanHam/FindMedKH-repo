@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>About – FindMEDKH</title>
+  <link rel="stylesheet" href="../assets/css/shared.css"/>
+  <style>
+    /* ═══ about.html styles — TO CUSTOMIZE: edit sections below ═══ */
+    .page-hero { background:linear-gradient(135deg,var(--sky-dark),var(--sky)); color:var(--white); padding:5rem 4rem 4rem; text-align:center; }
+    .page-hero h1 { color:var(--white); margin-bottom:1rem; }
+    .page-hero p  { opacity:.8; max-width:540px; margin:0 auto; font-size:1.05rem; }
+    /* Mission split section */
+    .mission { padding:5.5rem 2rem; background:var(--white); }
+    .mission-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; max-width:1000px; margin:0 auto; }
+    .mission-img { background:linear-gradient(135deg,var(--sky-pale),var(--sky-light)); border-radius:var(--r-xl); aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:8rem; box-shadow:var(--shadow-md); }
+    /* Values grid — TO ADD A VALUE: copy .val-card block and edit */
+    .values { padding:5.5rem 2rem; background:var(--sky-xpale); }
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; max-width:1000px; margin:0 auto; }
+    .val-card { background:var(--white); border-radius:var(--r-lg); padding:2rem; border:1px solid var(--border); transition:all var(--t); }
+    .val-card:hover { box-shadow:var(--shadow-md); transform:translateY(-4px); }
+    .val-icon { font-size:2.5rem; margin-bottom:.9rem; }
+    .val-card h3 { color:var(--sky-dark); margin-bottom:.5rem; }
+    .val-card p  { font-size:.88rem; color:var(--ink-muted); line-height:1.75; }
+    /* Stats bar */
+    .stats-section { padding:4rem 2rem; background:linear-gradient(135deg,var(--sky-dark),var(--navy)); }
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; max-width:900px; margin:0 auto; text-align:center; }
+    .stat-item .num { font-family:'Fraunces',serif; font-size:3rem; color:var(--gold); }
+    .stat-item .lbl { font-size:.82rem; color:rgba(255,255,255,.65); margin-top:.3rem; text-transform:uppercase; letter-spacing:.05em; }
+    /* Tech stack grid */
+    .tech-section { padding:5.5rem 2rem; background:var(--white); }
+    .tech-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; max-width:900px; margin:0 auto; }
+    .tech-card { background:var(--sky-xpale); border-radius:var(--r-md); padding:1.3rem; text-align:center; border:1px solid var(--border); }
+    .tech-icon { font-size:2rem; margin-bottom:.6rem; }
+    .tech-name { font-weight:700; font-size:.9rem; color:var(--sky-dark); }
+    .tech-desc { font-size:.76rem; color:var(--ink-muted); margin-top:.25rem; }
+    @media(max-width:900px) { .mission-grid{grid-template-columns:1fr;gap:2.5rem;} .values-grid{grid-template-columns:1fr 1fr;} .stats-grid{grid-template-columns:1fr 1fr;} .tech-grid{grid-template-columns:1fr 1fr;} .page-hero{padding:3.5rem 1.5rem;} }
+    @media(max-width:500px) { .values-grid{grid-template-columns:1fr;} .tech-grid{grid-template-columns:1fr 1fr;} }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+  <!-- Page hero — TO CHANGE TEXT: edit h1 and p -->
+  <div class="page-hero">
+    <span class="section-label" style="background:rgba(255,255,255,.2);color:var(--white)">Our Story</span>
+    <h1>About FindMEDKH</h1>
+    <p>Building a healthier Cambodia — one hospital recommendation at a time.</p>
+  </div>
+  <!-- Mission section — TO CHANGE: edit .mission-content text -->
+  <section class="mission">
+    <div class="mission-grid">
+      <div class="mission-img">🏥</div>
+      <div class="mission-content">
+        <span class="section-label">Our Mission</span>
+        <h2>Healthcare Access for Everyone</h2>
+        <p style="color:var(--ink-muted);line-height:1.8;margin-bottom:1rem">In Phnom Penh, finding the right hospital for your condition can be confusing — especially in emergencies. FindMEDKH was built to change that.</p>
+        <p style="color:var(--ink-muted);line-height:1.8;margin-bottom:1.5rem">We believe everyone deserves fast, clear guidance to the right medical care. Our chatbot maps your symptoms to the right specialty and the nearest hospital in seconds.</p>
+        <a href="chatbot.html" class="btn btn-primary">Try the Chatbot →</a>
+      </div>
+    </div>
+  </section>
+  <!-- Values — TO ADD/REMOVE: copy/delete .val-card blocks -->
+  <section class="values">
+    <div class="container">
+      <div class="section-header centered"><span class="section-label">Core Values</span><h2>What We Stand For</h2></div>
+      <div class="values-grid">
+        <div class="val-card"><div class="val-icon">⚡</div><h3>Speed</h3><p>In a medical emergency, every second counts. Recommendations in under 3 seconds.</p></div>
+        <div class="val-card"><div class="val-icon">🎯</div><h3>Accuracy</h3><p>Hospitals matched to your specific symptoms and medical specialty — not random suggestions.</p></div>
+        <div class="val-card"><div class="val-icon">🔒</div><h3>Privacy</h3><p>Guests can chat without any account. We never sell data. Passwords are bcrypt-hashed.</p></div>
+        <div class="val-card"><div class="val-icon">📍</div><h3>Location-Smart</h3><p>Hospitals sorted by GPS distance using the Haversine formula — nearest hospital first.</p></div>
+        <div class="val-card"><div class="val-icon">🇰🇭</div><h3>Cambodia-First</h3><p>Built specifically for Phnom Penh with real hospitals and real data from local healthcare.</p></div>
+        <div class="val-card"><div class="val-icon">♿</div><h3>Accessible</h3><p>Plain language input, clear output. No medical training needed. Designed for everyone.</p></div>
+      </div>
+    </div>
+  </section>
+  <!-- Stats — numbers updated from API -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="num" id="sHosp">60+</div><div class="lbl">Hospitals</div></div>
+      <div class="stat-item"><div class="num">31</div><div class="lbl">Specialties</div></div>
+      <div class="stat-item"><div class="num">24/7</div><div class="lbl">Emergency Info</div></div>
+      <div class="stat-item"><div class="num">Free</div><div class="lbl">Always</div></div>
+    </div>
+  </section>
+  <!-- Tech stack — TO ADD TECHNOLOGY: copy .tech-card block -->
+  <section class="tech-section">
+    <div class="container">
+      <div class="section-header centered" style="margin-bottom:3rem"><span class="section-label">Built With</span><h2>Our Technology Stack</h2></div>
+      <div class="tech-grid">
+        <div class="tech-card"><div class="tech-icon">⚡</div><div class="tech-name">FastAPI</div><div class="tech-desc">Python backend</div></div>
+        <div class="tech-card"><div class="tech-icon">🗄️</div><div class="tech-name">MySQL</div><div class="tech-desc">Hospital database</div></div>
+        <div class="tech-card"><div class="tech-icon">🔐</div><div class="tech-name">JWT Auth</div><div class="tech-desc">Secure sessions</div></div>
+        <div class="tech-card"><div class="tech-icon">📐</div><div class="tech-name">Haversine</div><div class="tech-desc">GPS distance</div></div>
+        <div class="tech-card"><div class="tech-icon">🎨</div><div class="tech-name">Vanilla JS</div><div class="tech-desc">No framework</div></div>
+        <div class="tech-card"><div class="tech-icon">🧠</div><div class="tech-name">Keyword NLP</div><div class="tech-desc">Lightweight intent</div></div>
+        <div class="tech-card"><div class="tech-icon">🔗</div><div class="tech-name">SQLAlchemy</div><div class="tech-desc">ORM layer</div></div>
+        <div class="tech-card"><div class="tech-icon">📦</div><div class="tech-name">Pydantic</div><div class="tech-desc">Data validation</div></div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer"><div id="footer"></div></footer>
+  <div id="toast"></div>
+  <script src="../assets/js/shared.js"></script>
+  <script>
+    renderNavbar('about'); renderFooter();
+    async function loadStats() {
+      try { const d = await apiFetch('/hospitals'); document.getElementById('sHosp').textContent = d.length + '+'; } catch(e) {}
+    }
+    loadStats();
+  </script>
+</body>
+</html>

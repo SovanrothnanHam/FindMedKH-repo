@@ -1,0 +1,259 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FILE: assets/css/home.css
+   PURPOSE: Styles for the main landing page (index.html) ONLY.
+            Loaded after shared.css in index.html.
+
+   SECTIONS:
+   • .hero            — Full-viewport hero banner
+   • .how-section     — "How it works" 3-step process
+   • .specialties-section — Clickable specialty chips
+   • .featured-section — Top hospital cards
+   • .cta-section     — Bottom call-to-action banner
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── HERO SECTION ───────────────────────────────────────────────────────────
+   TO CUSTOMIZE HERO:
+   • Background gradient: edit the linear-gradient colors in .hero
+   • Hero height: edit min-height (currently 100vh - navbar height)
+   • Hero text: edit directly in index.html inside .hero-content
+   • Floating cards: edit .hero-card-float.card-1/.card-2 in index.html
+──────────────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: calc(100vh - var(--navbar-h));
+  display: flex; align-items: center;
+  padding: 5rem 4rem; gap: 4rem;
+  /* TO CHANGE HERO BACKGROUND: edit these gradient colors */
+  background: linear-gradient(140deg,
+    var(--sky-dark)  0%,
+    var(--sky-mid)   45%,
+    var(--sky)       80%,
+    #85C1E9          100%
+  );
+}
+
+/* Dot-grid overlay pattern on hero */
+.hero-bg-pattern {
+  position: absolute; inset: 0; pointer-events: none; opacity: .06;
+  background-image: radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px);
+  background-size: 30px 30px;
+  /* TO REMOVE DOT PATTERN: set opacity to 0 or delete this block */
+}
+
+/* Wave SVG at bottom of hero — purely decorative */
+.hero-wave {
+  position: absolute; bottom: -1px; left: 0; right: 0;
+  /* TO CHANGE WAVE COLOR: edit fill="#EBF5FB" in index.html .hero-wave SVG */
+}
+
+/* Left side: text content */
+.hero-content {
+  flex: 1; max-width: 560px; position: relative; z-index: 1;
+}
+.hero-content h1 {
+  /* TO CHANGE HERO TITLE SIZE: edit these clamp values */
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--white); margin-bottom: 1.2rem; line-height: 1.1;
+}
+.hero-content h1 em {
+  font-style: italic; color: var(--gold); /* Gold italic accent word */
+}
+.hero-content p {
+  color: rgba(255,255,255,.85); font-size: 1.08rem; margin-bottom: 2rem;
+}
+
+/* Hero CTA buttons row */
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+/* Override button styles specifically for hero context */
+.hero-actions .btn-coral { box-shadow: 0 6px 24px rgba(232,112,90,.35); }
+.hero-actions .btn-outline {
+  border-color: rgba(255,255,255,.55); color: var(--white);
+}
+.hero-actions .btn-outline:hover {
+  background: rgba(255,255,255,.15); color: var(--white); border-color: var(--white);
+}
+
+/* Stats strip below hero buttons */
+.hero-trust { display: flex; align-items: center; gap: 2rem; }
+.trust-item { display: flex; flex-direction: column; color: var(--white); }
+.trust-num {
+  /* TO CHANGE STAT NUMBER STYLE: edit font-size and color */
+  font-family: 'Fraunces', serif; font-size: 1.9rem; color: var(--gold); line-height: 1;
+}
+.trust-item span:last-child { font-size: .75rem; opacity: .7; text-transform: uppercase; letter-spacing: .06em; margin-top: .15rem; }
+.trust-sep { width: 1px; height: 40px; background: rgba(255,255,255,.25); }
+
+/* Right side: floating visual panel */
+.hero-visual {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  position: relative; min-height: 420px;
+  /* TO HIDE HERO VISUAL on all screens: add display: none */
+}
+
+/* Glowing pulse ring animation */
+.hero-ring {
+  width: 300px; height: 300px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  animation: pulse-ring 4s ease-in-out infinite;
+  box-shadow: 0 0 60px rgba(93,173,226,.3);
+}
+.hero-ring-inner {
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; /* emoji cross */
+}
+@keyframes pulse-ring {
+  0%,100% { box-shadow: 0 0 60px rgba(93,173,226,.3); }
+  50%      { box-shadow: 0 0 100px rgba(93,173,226,.5); }
+}
+
+/* Floating mini info cards on the visual */
+.hero-card-float {
+  position: absolute; border-radius: var(--r-md); padding: .75rem 1rem;
+  display: flex; align-items: center; gap: .65rem; color: var(--white);
+  font-size: .82rem; animation: float-card 6s ease-in-out infinite;
+  /* Glassmorphism effect */
+  background: rgba(255,255,255,.15); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.25); box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+/* TO REPOSITION CARDS: edit top/bottom/left/right values */
+.hero-card-float.card-1 { top: 12%; left: -2%; animation-delay: 0s; }
+.hero-card-float.card-2 { bottom: 12%; right: -2%; animation-delay: 3s; }
+.hcf-icon { font-size: 1.6rem; }
+.hero-card-float strong { display: block; font-size: .88rem; }
+.hero-card-float small { opacity: .75; font-size: .76rem; }
+/* Float up/down animation for cards */
+@keyframes float-card {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* ── HOW IT WORKS SECTION ───────────────────────────────────────────────────
+   TO CUSTOMIZE: edit step text in index.html inside .step-card elements
+──────────────────────────────────────────────────────────────────────────── */
+.how-section { padding: 6rem 2rem; background: var(--white); }
+.steps-grid {
+  display: flex; align-items: stretch; gap: 0;
+  max-width: 900px; margin: 0 auto;
+}
+.step-card {
+  flex: 1; text-align: center; padding: 2.5rem 1.5rem;
+  background: var(--sky-xpale); border-radius: var(--r-lg);
+  position: relative; border: 1px solid var(--border);
+  transition: transform var(--t), box-shadow var(--t);
+}
+.step-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+/* Step number in background */
+.step-num {
+  font-family: 'Fraunces', serif; font-size: 3.5rem; color: var(--border);
+  position: absolute; top: .5rem; right: 1rem; line-height: 1;
+  /* TO HIDE STEP NUMBERS: add display: none */
+}
+.step-icon { font-size: 2.5rem; margin-bottom: .9rem; }
+.step-card h3 { color: var(--sky-dark); margin-bottom: .5rem; }
+.step-card p { font-size: .9rem; color: var(--ink-muted); }
+/* Dashed connector between steps */
+.step-connector {
+  width: 60px; flex-shrink: 0; display: flex; align-items: center;
+  justify-content: center; border-top: 2px dashed var(--sky-light); position: relative;
+}
+.step-connector::after {
+  content: '→'; position: absolute;
+  background: var(--white); color: var(--sky); padding: 0 .3rem; font-size: 1.1rem;
+}
+
+/* ── SPECIALTIES CHIPS SECTION ──────────────────────────────────────────────
+   TO ADD/REMOVE SPECIALTY CHIPS: edit the .sp-chip elements in index.html
+   TO CHANGE CHIP COLORS: edit background and border-color below
+──────────────────────────────────────────────────────────────────────────── */
+.specialties-section { padding: 6rem 2rem; background: var(--sky-xpale); }
+.specialty-chips { display: flex; flex-wrap: wrap; gap: .75rem; }
+.sp-chip {
+  padding: .6rem 1.2rem; border-radius: 50px; font-size: .88rem; font-weight: 500;
+  cursor: pointer; transition: all var(--t);
+  background: var(--white); color: var(--ink-mid); border: 1.5px solid var(--border);
+}
+.sp-chip:hover {
+  background: var(--sky); color: var(--white); border-color: var(--sky);
+  transform: translateY(-2px); box-shadow: var(--shadow-sm);
+}
+
+/* ── FEATURED HOSPITALS SECTION ─────────────────────────────────────────────
+   Hospital cards loaded dynamically from API in index.html <script>
+   TO CHANGE CARD COLUMNS: edit grid-template-columns below
+──────────────────────────────────────────────────────────────────────────── */
+.featured-section { padding: 6rem 2rem; background: var(--white); }
+/* TO CHANGE COLUMNS: e.g. repeat(2, 1fr) for 2 columns */
+.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.feat-card { padding: 0; cursor: pointer; }
+/* Hospital photo in card */
+.feat-photo {
+  height: 160px; overflow: hidden; position: relative;
+  background: linear-gradient(135deg, var(--sky-pale), var(--sky-light));
+}
+.feat-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.feat-card:hover .feat-photo img { transform: scale(1.05); }
+/* Placeholder when no photo available */
+.feat-photo-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center;
+  justify-content: center; font-size: 3.5rem; opacity: .4;
+}
+.feat-body { padding: 1.3rem; }
+.feat-top { display: flex; gap: .4rem; margin-bottom: .8rem; flex-wrap: wrap; }
+.feat-name { font-family: 'Fraunces', serif; font-size: 1.02rem; margin-bottom: .35rem; color: var(--sky-dark); }
+.feat-desc { font-size: .83rem; color: var(--ink-muted); margin-bottom: .7rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.feat-meta { display: flex; flex-direction: column; gap: .3rem; font-size: .8rem; color: var(--ink-muted); }
+/* Loading skeleton animation */
+.feat-skeleton {
+  height: 260px; border-radius: var(--r-lg); overflow: hidden;
+  background: linear-gradient(90deg, var(--border) 25%, var(--sky-pale) 50%, var(--border) 75%);
+  background-size: 400% 100%; animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer { 0%{background-position:100% 0} 100%{background-position:-100% 0} }
+
+/* ── CTA BANNER SECTION ──────────────────────────────────────────────────────
+   Bottom call-to-action band.
+   TO CHANGE CTA COLORS: edit the linear-gradient in .cta-box
+──────────────────────────────────────────────────────────────────────────── */
+.cta-section { padding: 4rem 2rem 6rem; background: var(--sky-pale); }
+.cta-box {
+  /* TO CHANGE CTA BACKGROUND: edit gradient colors */
+  background: linear-gradient(135deg, var(--sky-dark), var(--sky-mid));
+  border-radius: var(--r-xl); padding: 3.5rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; color: var(--white); max-width: var(--container); margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+  position: relative; overflow: hidden;
+}
+/* Decorative circle on CTA */
+.cta-box::before {
+  content: ''; position: absolute; right: -60px; top: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: rgba(255,255,255,.06); pointer-events: none;
+}
+.cta-box h2 { color: var(--white); margin-bottom: .5rem; }
+.cta-box p { opacity: .8; max-width: 400px; }
+
+/* ── RESPONSIVE HOME ─────────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .hero { flex-direction: column; padding: 4rem 2rem; min-height: auto; text-align: center; }
+  .hero-visual { display: none; } /* Hide visual on tablet */
+  .hero-trust { justify-content: center; }
+  .hero-actions { justify-content: center; }
+  .featured-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { flex-direction: column; }
+  .step-connector { width: 2px; height: 40px; border-top: none; border-left: 2px dashed var(--sky-light); }
+  .step-connector::after { content: '↓'; }
+  .cta-box { flex-direction: column; text-align: center; padding: 2.5rem 2rem; }
+}
+@media (max-width: 640px) {
+  .hero { padding: 3rem 1.5rem; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .hero-trust { flex-direction: column; gap: .8rem; align-items: center; }
+  .trust-sep { display: none; }
+}

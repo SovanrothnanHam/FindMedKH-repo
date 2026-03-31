@@ -1,0 +1,392 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FILE: assets/css/shared.css
+   PURPOSE: Global styles shared across ALL pages of FindMEDKH.
+            Every HTML page loads this file first.
+
+   ╔══════════════════════════════════════════════════════════════╗
+   ║  QUICK CUSTOMIZATION GUIDE                                   ║
+   ║  • Change site colors   → edit :root variables below        ║
+   ║  • Change fonts         → edit @import + font-family        ║
+   ║  • Change button shape  → edit --r-btn (50px=pill, 8px=box) ║
+   ║  • Change navbar height → edit --navbar-h                   ║
+   ║  • Change logo          → edit renderNavbar() in shared.js  ║
+   ╚══════════════════════════════════════════════════════════════╝
+
+   COLOR THEME: Baby Blue + Coral accents + Navy footer
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── FONTS ──────────────────────────────────────────────────────────────────
+   TO CHANGE FONT: replace this URL with a new Google Fonts link.
+   Popular medical/clean choices:
+   • Poppins:     https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap
+   • Nunito:      https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap
+   • Inter:       https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap
+   Then also update font-family in body{} and h1,h2,h3,h4{} selectors below.
+──────────────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ── RESET ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — ★ MAIN CUSTOMIZATION ZONE ★
+   Change any variable here and the entire site updates automatically.
+══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── PRIMARY BRAND COLORS (Baby Blue) ──────────────────────────────
+     TO CHANGE MAIN COLOR: Replace all --sky-* values with your color.
+     Example: change #5DADE2 to #7B68EE for purple theme.
+  ────────────────────────────────────────────────────────────────────── */
+  --sky:        #5DADE2;   /* Main baby blue — buttons, links, active states */
+  --sky-dark:   #2E86C1;   /* Darker blue — hover, headings, emphasis */
+  --sky-mid:    #3498DB;   /* Medium blue — gradients, icons */
+  --sky-light:  #AED6F1;   /* Light blue — borders, decorative elements */
+  --sky-pale:   #EBF5FB;   /* Very pale blue — page background */
+  --sky-xpale:  #F4FAFF;   /* Near-white blue — alternating sections */
+
+  /* ── ACCENT COLORS ──────────────────────────────────────────────────
+     Coral provides warm contrast against baby blue.
+     TO CHANGE CTA COLOR: Replace --coral values (used on big action buttons).
+  ────────────────────────────────────────────────────────────────────── */
+  --coral:       #E8705A;   /* Warm coral — CTA buttons, highlights */
+  --coral-light: #F0956A;   /* Coral hover state */
+  --coral-pale:  #FEF0EC;   /* Coral tint background */
+  --mint:        #1ABC9C;   /* Teal-green — success, confirmed */
+  --mint-pale:   #D5F5E3;   /* Mint tint background */
+  --gold:        #F4C842;   /* Gold — admin, 24h badge */
+  --gold-pale:   #FEF9E7;   /* Gold tint background */
+
+  /* ── NEUTRAL / TEXT COLORS ──────────────────────────────────────────
+     TO CHANGE TEXT COLOR: edit --ink (main text) and --ink-mid (body text)
+  ────────────────────────────────────────────────────────────────────── */
+  --white:      #FFFFFF;
+  --navy:       #1A3A52;   /* Deep navy — footer background */
+  --navy-mid:   #264D6D;   /* Medium navy — footer subheadings */
+  --ink:        #1C2833;   /* Near-black — headings, primary text */
+  --ink-mid:    #4A5568;   /* Dark gray — body text */
+  --ink-muted:  #8A9BB0;   /* Muted gray — placeholders, captions */
+  --border:     #D6EAF8;   /* Blue-tinted border color */
+  --border-mid: #AED6F1;   /* Slightly stronger border */
+
+  /* ── STATUS COLORS ─────────────────────────────────────────────── */
+  --danger:      #E74C3C;  /* Red — errors, delete */
+  --danger-pale: #FDEDEC;  /* Red tint — error backgrounds */
+  --success:     #27AE60;  /* Green — success messages */
+  --warning:     #F39C12;  /* Orange — warnings */
+
+  /* ── SHADOWS ────────────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 4px rgba(46,134,193,.07);
+  --shadow-sm: 0 2px 12px rgba(46,134,193,.11);
+  --shadow-md: 0 6px 28px rgba(46,134,193,.16);
+  --shadow-lg: 0 16px 56px rgba(46,134,193,.20);
+  --shadow-xl: 0 24px 80px rgba(46,134,193,.24);
+
+  /* ── BORDER RADII ───────────────────────────────────────────────── */
+  --r-xs:  4px;
+  --r-sm:  8px;    /* Small UI elements */
+  --r-md:  14px;   /* Cards, inputs */
+  --r-lg:  20px;   /* Large cards */
+  --r-xl:  30px;   /* Hero sections, modals */
+  --r-btn: 50px;   /* ← BUTTON SHAPE: 50px=pill, 8px=rounded square */
+
+  /* ── LAYOUT ─────────────────────────────────────────────────────── */
+  --navbar-h:  68px;    /* ← Navbar height (also change in .navbar height:) */
+  --container: 1160px;  /* ← Max page content width */
+  --t:         .22s ease; /* Hover animation speed */
+}
+
+/* ── BASE ──────────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  /* TO CHANGE BODY FONT: update 'Plus Jakarta Sans' */
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--sky-pale);
+  color: var(--ink-mid);
+  line-height: 1.65;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADINGS — TO CHANGE HEADING FONT: update 'Fraunces' ─────────────── */
+h1, h2, h3, h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  line-height: 1.2; color: var(--ink);
+}
+/* TO CHANGE HEADING SIZES: edit clamp(min, responsive, max) values */
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+h2 { font-size: clamp(1.55rem, 3vw, 2.3rem); }
+h3 { font-size: 1.22rem; }
+h4 { font-size: 1rem; }
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.hidden { display: none !important; }
+
+/* ── LAYOUT CONTAINER ──────────────────────────────────────────────────── */
+.container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+
+/* ── SECTION LABELS ────────────────────────────────────────────────────── */
+.section-label {
+  display: inline-block; font-size: .72rem; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+  color: var(--sky-dark); background: rgba(93,173,226,.12);
+  padding: .3rem .9rem; border-radius: 50px; margin-bottom: .9rem;
+}
+.section-header { margin-bottom: 3rem; }
+.section-header h2 { margin-bottom: .65rem; }
+.section-header p { color: var(--ink-muted); max-width: 520px; font-size: .97rem; }
+.section-header.centered { text-align: center; }
+.section-header.centered p { margin: 0 auto; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   BUTTONS
+   TO CUSTOMIZE:
+   • Change shape: edit --r-btn in :root above
+   • Change primary color: edit --sky values in :root
+   • Change CTA color: edit --coral values in :root
+   • Add new button type: copy .btn-primary block and rename
+══════════════════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .65rem 1.6rem; border-radius: var(--r-btn); font-size: .9rem;
+  font-weight: 600; cursor: pointer; border: 2px solid transparent;
+  transition: all var(--t); font-family: 'Plus Jakarta Sans', sans-serif;
+  white-space: nowrap; letter-spacing: .01em; text-decoration: none;
+  -webkit-appearance: none;
+}
+.btn-primary  { background: var(--sky); color: var(--white); border-color: var(--sky); }
+.btn-primary:hover { background: var(--sky-dark); border-color: var(--sky-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-outline  { background: transparent; color: var(--sky); border-color: var(--sky); }
+.btn-outline:hover { background: var(--sky); color: var(--white); }
+.btn-coral    { background: var(--coral); color: var(--white); border-color: var(--coral); }
+.btn-coral:hover { background: var(--coral-light); border-color: var(--coral-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,112,90,.3); }
+.btn-ghost    { background: transparent; color: var(--ink-muted); border-color: var(--border); }
+.btn-ghost:hover { background: var(--sky-pale); color: var(--ink); border-color: var(--sky-light); }
+.btn-danger   { background: var(--danger); color: var(--white); border-color: var(--danger); }
+.btn-danger:hover { background: #C0392B; }
+.btn-gold     { background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700; }
+.btn-gold:hover { background: #F8D96A; transform: translateY(-1px); }
+.btn-sm  { padding: .4rem 1rem; font-size: .82rem; }
+.btn-lg  { padding: .85rem 2.2rem; font-size: 1rem; }
+.btn-full { width: 100%; justify-content: center; }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   FORM ELEMENTS
+   TO CUSTOMIZE INPUT STYLE:
+   • Border color: change border: 1.5px solid var(--border)
+   • Focus color: change border-color: var(--sky) in :focus
+   • Corner shape: change border-radius: var(--r-sm)
+══════════════════════════════════════════════════════════════════════ */
+.form-group { margin-bottom: 1.1rem; }
+.form-group label {
+  display: block; font-size: .79rem; font-weight: 700;
+  color: var(--ink); margin-bottom: .4rem;
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; padding: .72rem 1.1rem;
+  border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  font-size: .93rem; font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--white); color: var(--ink); outline: none;
+  transition: border-color var(--t), box-shadow var(--t);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(93,173,226,.15);
+}
+.form-group input::placeholder { color: var(--ink-muted); }
+.form-error   { color: var(--danger); font-size: .82rem; margin-top: .35rem; }
+.form-success { color: var(--success); font-size: .82rem; margin-top: .35rem; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   NAVBAR
+   TO CUSTOMIZE:
+   • Height:      change height: 68px (update --navbar-h too)
+   • Background:  change background: rgba(255,255,255,.96)
+   • Logo text:   edit renderNavbar() in shared.js → nav-brand text
+   • Logo icon:   edit the .cross div in shared.js
+   • Nav links:   edit pages[] array in shared.js renderNavbar()
+   • Login/Signup buttons: edit actions HTML in shared.js renderNavbar()
+══════════════════════════════════════════════════════════════════════ */
+.navbar {
+  position: sticky; top: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem; height: var(--navbar-h);
+  background: rgba(255,255,255,.97); /* TO CHANGE: edit this */
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(46,134,193,.07);
+}
+/* LOGO — edit renderNavbar() in shared.js to change logo text/icon */
+.nav-brand {
+  display: flex; align-items: center; gap: .65rem;
+  font-family: 'Fraunces', serif; font-size: 1.45rem;
+  color: var(--sky-dark); font-weight: 700; text-decoration: none;
+}
+.nav-brand .cross {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  border-radius: 10px; display: flex; align-items: center;
+  justify-content: center; color: var(--white); font-size: 1.15rem;
+  box-shadow: 0 3px 10px rgba(46,134,193,.3);
+}
+.nav-links { display: flex; align-items: center; gap: 2.2rem; }
+.nav-links a {
+  font-size: .9rem; font-weight: 500; color: var(--ink-mid);
+  transition: color var(--t); position: relative; padding-bottom: 3px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px; background: var(--sky);
+  transition: width var(--t); border-radius: 2px;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--sky-dark); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-actions { display: flex; gap: .6rem; align-items: center; }
+.nav-user {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .35rem .9rem .35rem .4rem; border-radius: 50px;
+  background: var(--sky-pale); border: 1px solid var(--border);
+  font-size: .88rem; font-weight: 600; color: var(--sky-dark);
+}
+.nav-user .avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--sky), var(--sky-dark));
+  color: var(--white); display: flex; align-items: center;
+  justify-content: center; font-size: .78rem; font-weight: 700;
+}
+.nav-toggle {
+  display: none; background: none; border: none;
+  cursor: pointer; padding: .4rem; flex-direction: column; gap: 5px;
+}
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--sky-dark); border-radius: 2px; transition: var(--t); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   FOOTER
+   TO CUSTOMIZE:
+   • Background color: change background: var(--navy)
+   • Footer links:     edit renderFooter() in shared.js
+   • Emergency numbers: edit renderFooter() in shared.js
+   • Add/remove columns: edit the footer-grid in renderFooter()
+══════════════════════════════════════════════════════════════════════ */
+.footer { background: var(--navy); color: rgba(255,255,255,.7); padding: 4rem 3rem 2rem; }
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; margin-bottom: 2.5rem;
+  max-width: var(--container); margin-left: auto; margin-right: auto;
+}
+.footer-brand {
+  font-family: 'Fraunces', serif; font-size: 1.4rem;
+  color: var(--white); margin-bottom: .7rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.footer-brand .cross {
+  width: 30px; height: 30px; background: var(--sky);
+  border-radius: 8px; display: flex; align-items: center;
+  justify-content: center; font-size: .9rem;
+}
+.footer-tagline { font-size: .87rem; line-height: 1.65; }
+.footer-col h4 {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: .74rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--sky-light); margin-bottom: 1rem; font-weight: 700;
+}
+.footer-col a { display: block; font-size: .87rem; margin-bottom: .5rem; transition: color var(--t); color: rgba(255,255,255,.65); }
+.footer-col a:hover { color: var(--sky-light); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.1); padding-top: 1.5rem; margin-top: 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .82rem; max-width: var(--container); margin-left: auto; margin-right: auto;
+}
+
+/* ── CARDS ─────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--white); border-radius: var(--r-lg);
+  border: 1px solid var(--border); box-shadow: var(--shadow-xs);
+  overflow: hidden; transition: box-shadow var(--t), transform var(--t);
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+/* ── BADGES ─────────────────────────────────────────────────────────────── */
+/* TO ADD NEW BADGE: copy a block, rename .badge-xxx, change colors */
+.badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .25rem .75rem; border-radius: 50px; font-size: .73rem; font-weight: 700;
+}
+.badge-public  { background: var(--mint-pale); color: #0E6655; }
+.badge-private { background: rgba(93,173,226,.15); color: var(--sky-dark); }
+.badge-gold    { background: var(--gold-pale); color: #7D6608; }
+.badge-coral   { background: var(--coral-pale); color: #922B21; }
+
+/* ── TOAST NOTIFICATION ─────────────────────────────────────────────────── */
+/* TO CHANGE POSITION: edit bottom/right values */
+#toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  background: var(--navy); color: var(--white);
+  padding: .85rem 1.4rem; border-radius: var(--r-md); font-size: .9rem; font-weight: 500;
+  box-shadow: var(--shadow-lg); transform: translateY(100px); opacity: 0;
+  transition: all .3s ease; pointer-events: none; max-width: 320px;
+}
+#toast.show    { transform: translateY(0); opacity: 1; }
+#toast.error   { background: var(--danger); }
+#toast.success { background: var(--mint); }
+
+/* ── MODAL ──────────────────────────────────────────────────────────────── */
+/* TO CHANGE MODAL WIDTH: edit max-width: 500px in .modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(26,58,82,.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500; opacity: 0; pointer-events: none;
+  transition: opacity .25s; backdrop-filter: blur(4px); padding: 1rem;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--white); border-radius: var(--r-xl); padding: 2.5rem;
+  width: 100%; max-width: 500px; position: relative;
+  transform: scale(.95) translateY(20px); transition: transform .25s;
+  box-shadow: var(--shadow-xl); max-height: 90vh; overflow-y: auto;
+}
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem; background: var(--sky-pale);
+  border: 1px solid var(--border); width: 32px; height: 32px;
+  border-radius: 50%; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-muted); transition: var(--t);
+}
+.modal-close:hover { background: var(--danger); color: var(--white); border-color: var(--danger); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────────── */
+/* TO CHANGE MOBILE BREAKPOINT: edit max-width values */
+@media (max-width: 960px) {
+  .navbar { padding: 0 1.5rem; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column; gap: 0; align-items: flex-start;
+    position: fixed; top: var(--navbar-h); left: 0; right: 0;
+    background: var(--white); border-bottom: 2px solid var(--border);
+    padding: 1rem 1.5rem 1.5rem; box-shadow: var(--shadow-md); z-index: 199;
+  }
+  .nav-links.open a { padding: .8rem 0; width: 100%; border-bottom: 1px solid var(--border); font-size: .95rem; }
+  .nav-links.open a:last-child { border-bottom: none; }
+  .nav-toggle { display: flex; }
+  .footer { padding: 3rem 1.5rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
+}
+
+/* ── SCROLLBAR ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--sky-xpale); }
+::-webkit-scrollbar-thumb { background: var(--sky-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sky); }
+::selection { background: var(--sky-light); color: var(--navy); }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>FAQ – FindMEDKH</title>
+  <link rel="stylesheet" href="../assets/css/shared.css"/>
+  <style>
+    /* ═══ faq.html styles ═══
+       TO ADD A FAQ ITEM: copy a .faq-item block and edit q/a text.
+       TO ADD A CATEGORY: copy a .faq-category block.
+    ═══ */
+    .page-hero { background:linear-gradient(135deg,var(--sky-dark),var(--sky)); color:var(--white); padding:5rem 4rem 4rem; text-align:center; }
+    .page-hero h1 { color:var(--white); margin-bottom:1rem; }
+    .page-hero p { opacity:.8; max-width:480px; margin:0 auto; }
+    .faq-section { max-width:780px; margin:0 auto; padding:4rem 2rem 6rem; }
+    /* Category label — TO CHANGE COLOR: edit color:var(--sky) */
+    .faq-cat-title { font-size:.73rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--sky-dark); border-bottom:2px solid var(--sky-light); padding-bottom:.6rem; margin-bottom:1.1rem; }
+    .faq-category { margin-bottom:3rem; }
+    /* FAQ accordion item */
+    .faq-item { border:1px solid var(--border); border-radius:var(--r-md); margin-bottom:.65rem; background:var(--white); overflow:hidden; transition:box-shadow var(--t); }
+    .faq-item:hover { box-shadow:var(--shadow-sm); }
+    .faq-item.open  { border-color:var(--sky-light); box-shadow:var(--shadow-sm); }
+    .faq-q { display:flex; justify-content:space-between; align-items:center; padding:1.1rem 1.3rem; cursor:pointer; gap:1rem; }
+    .faq-q span:first-child { font-weight:600; font-size:.93rem; color:var(--ink); }
+    /* Chevron icon — rotates when open */
+    .faq-chevron { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--sky-pale); display:flex; align-items:center; justify-content:center; font-size:.8rem; transition:all var(--t); color:var(--sky-dark); border:1px solid var(--border); }
+    .faq-item.open .faq-chevron { background:var(--sky); color:var(--white); border-color:var(--sky); transform:rotate(180deg); }
+    /* Collapsible answer — max-height animation trick */
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .35s ease; }
+    .faq-item.open .faq-a { max-height:600px; }
+    .faq-a-inner { padding:.2rem 1.3rem 1.2rem; color:var(--ink-muted); font-size:.9rem; line-height:1.8; border-top:1px solid var(--border); padding-top:.9rem; }
+    .faq-a-inner a { color:var(--sky-dark); font-weight:500; }
+    .faq-a-inner strong { color:var(--ink); }
+    /* Bottom CTA */
+    .still-help { background:linear-gradient(135deg,var(--sky-dark),var(--sky-mid)); border-radius:var(--r-xl); padding:3rem; text-align:center; color:var(--white); margin-top:3rem; }
+    .still-help h3 { color:var(--white); margin-bottom:.65rem; }
+    .still-help p { opacity:.8; margin-bottom:1.5rem; }
+    @media(max-width:700px) { .page-hero{padding:3.5rem 1.5rem;} }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+  <div class="page-hero">
+    <span class="section-label" style="background:rgba(255,255,255,.2);color:var(--white)">Help Center</span>
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about FindMEDKH</p>
+  </div>
+
+  <div class="faq-section">
+    <!-- ── CATEGORY 1 ── TO CHANGE CATEGORY TITLE: edit faq-cat-title -->
+    <div class="faq-category">
+      <div class="faq-cat-title">General</div>
+      <!-- TO ADD FAQ: copy this .faq-item block and edit the question and answer -->
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>What is FindMEDKH?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">FindMEDKH is a hospital recommendation platform for Phnom Penh, Cambodia. Describe your symptoms in plain language, and our chatbot matches you to the right medical specialty and recommends the nearest hospitals instantly.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Is FindMEDKH free to use?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Yes — completely free. Guest users get <strong>5 free chatbot messages</strong>. Simply <a href="signup.html">create a free account</a> for unlimited access. We never charge for basic hospital search.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Which hospitals are listed?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Over 60 public and private hospitals and clinics in Phnom Penh — including Calmette, Sunrise Japan Hospital, all Kantha Bopha children's hospitals, and many specialist clinics for dental, eye, mental health, and physiotherapy care.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Is this a replacement for medical advice?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner"><strong>No.</strong> FindMEDKH is a hospital finder — not a medical diagnosis tool. Always consult a qualified doctor for medical advice. In an emergency, call <strong>118 (ambulance)</strong> or go directly to the nearest ER.</div></div></div>
+    </div>
+
+    <div class="faq-category">
+      <div class="faq-cat-title">Chatbot</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>How does the chatbot recommend hospitals?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">The chatbot uses <strong>keyword-based intent detection</strong> — no heavy AI required. It tokenizes your message, scores keywords against known medical categories, picks the best specialty, and queries our database for matching hospitals sorted by GPS distance.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Why only 5 free messages as a guest?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Guest sessions are temporary. Registering a free account removes this limit entirely and lets us save your chat history so you can continue conversations later.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Can I get hospitals sorted by distance?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Yes! Click the <strong>"Enable Location"</strong> button in the chatbot sidebar and allow location access. Hospitals will immediately be sorted nearest-first using GPS coordinates.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>What languages does the chatbot support?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Currently <strong>English only</strong>. Khmer language support is planned for a future release.</div></div></div>
+    </div>
+
+    <div class="faq-category">
+      <div class="faq-cat-title">Account & Privacy</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Is my health data private?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Yes. Chat messages are only stored when you're logged in, and only you can view your history. We do not sell, share, or monetize any user data. Passwords are securely hashed with bcrypt.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>How do I delete my account?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Currently an admin can delete accounts. Self-service account deletion is on our roadmap.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>I forgot my password — what do I do?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Password reset via email is on our roadmap. For now, please register a new account. We apologize for the inconvenience.</div></div></div>
+    </div>
+
+    <div class="faq-category">
+      <div class="faq-cat-title">Hospitals & Data</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>How often is hospital data updated?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Our admin team reviews and updates hospital data regularly. If you notice incorrect information, please contact us so we can fix it promptly.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>Can I suggest a hospital to be added?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">Absolutely. Reach out to our admin team and we'll review the request. We're actively expanding our database.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggle(this)"><span>What does "24/7" mean on a listing?</span><span class="faq-chevron">▼</span></div><div class="faq-a"><div class="faq-a-inner">It means the hospital has 24-hour emergency services available. Always call ahead to confirm for non-emergency care as staffing can vary.</div></div></div>
+    </div>
+
+    <!-- Bottom CTA — TO CHANGE: edit h3 and p text -->
+    <div class="still-help">
+      <h3>Still have questions?</h3>
+      <p>Our chatbot can guide you to the right hospital right now.</p>
+      <a href="chatbot.html" class="btn btn-coral btn-lg">Chat with MED Bot →</a>
+    </div>
+  </div>
+
+  <footer class="footer"><div id="footer"></div></footer>
+  <div id="toast"></div>
+  <script src="../assets/js/shared.js"></script>
+  <script>
+    renderNavbar('faq'); renderFooter();
+    /* Accordion toggle — clicking a question opens/closes it */
+    function toggle(el) {
+      const item   = el.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      /* Close all open items */
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      /* Open clicked item (if it wasn't already open) */
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>

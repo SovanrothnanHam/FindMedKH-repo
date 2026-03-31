@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <!-- TO CHANGE PAGE TITLE: edit text below -->
+  <title>Hospitals – FindMEDKH</title>
+  <link rel="stylesheet" href="../assets/css/shared.css"/>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       PAGE STYLES: hospitals.html
+       Inline here since these styles are unique to this page only.
+
+       TO CUSTOMIZE:
+       • Hero banner: edit .page-hero background gradient
+       • Filter bar: edit .filters-bar position/background
+       • Hospital card: edit .hosp-card padding and colors
+       • Card photo height: edit .hosp-photo height (currently 180px)
+       • Card columns: edit grid-template-columns in .hospitals-grid
+    ═══════════════════════════════════════════════════════════════ */
+
+    /* Page hero banner at top */
+    /* TO CHANGE BANNER COLOR: edit linear-gradient colors */
+    .page-hero {
+      background: linear-gradient(135deg, var(--sky-dark), var(--sky));
+      color: var(--white); padding: 4rem 4rem 3rem;
+    }
+    .page-hero h1 { color: var(--white); margin-bottom: .5rem; }
+    .page-hero p  { opacity: .8; }
+
+    /* ── FILTER BAR — sticky bar below navbar ── */
+    /* TO CHANGE FILTER BAR BACKGROUND: edit background value */
+    .filters-bar {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 1rem 3rem; display: flex; align-items: center;
+      gap: 1rem; flex-wrap: wrap;
+      position: sticky; top: var(--navbar-h); z-index: 100;
+      box-shadow: var(--shadow-xs);
+    }
+    /* Search input in filter bar */
+    .filter-input {
+      flex: 1; min-width: 200px; padding: .6rem 1rem;
+      border: 1.5px solid var(--border); border-radius: var(--r-btn);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: .9rem;
+      outline: none; transition: border-color var(--t);
+    }
+    .filter-input:focus { border-color: var(--sky); }
+    /* Dropdown selects */
+    .filter-select {
+      padding: .6rem 1rem; border: 1.5px solid var(--border);
+      border-radius: var(--r-btn); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .88rem; background: var(--white); outline: none; cursor: pointer;
+    }
+    .filter-select:focus { border-color: var(--sky); }
+    /* Location button */
+    .loc-btn {
+      padding: .6rem 1.1rem; border-radius: var(--r-btn);
+      border: 1.5px solid var(--border); background: var(--white);
+      cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .88rem; transition: all var(--t); white-space: nowrap; font-weight: 500;
+    }
+    .loc-btn.active { background: var(--sky); color: var(--white); border-color: var(--sky); }
+    .results-count { font-size: .83rem; color: var(--ink-muted); white-space: nowrap; margin-left: auto; }
+
+    /* ── HOSPITAL GRID ── */
+    /* TO CHANGE COLUMNS: e.g. repeat(2, 1fr) for 2 columns */
+    .hospitals-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; padding: 2.5rem 3rem;
+    }
+
+    /* ── HOSPITAL CARD ── */
+    .hosp-card {
+      background: var(--white); border-radius: var(--r-lg);
+      border: 1px solid var(--border); transition: all var(--t); overflow: hidden;
+    }
+    .hosp-card:hover {
+      box-shadow: var(--shadow-md); transform: translateY(-4px);
+      border-color: var(--sky-light);
+    }
+
+    /* Hospital photo — TO CHANGE HEIGHT: edit height: 180px */
+    .hosp-photo {
+      height: 180px; overflow: hidden; position: relative;
+      background: linear-gradient(135deg, var(--sky-pale), var(--sky-light));
+    }
+    .hosp-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .hosp-card:hover .hosp-photo img { transform: scale(1.05); }
+    /* Placeholder when no photo */
+    .hosp-photo-placeholder {
+      width: 100%; height: 100%; display: flex; align-items: center;
+      justify-content: center; font-size: 4rem; opacity: .3;
+    }
+    /* Type badge overlaid on photo */
+    .photo-badge {
+      position: absolute; top: .75rem; left: .75rem;
+    }
+
+    /* Card body */
+    .hosp-body { padding: 1.2rem 1.3rem; }
+    .hosp-top  { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .7rem; gap: .5rem; }
+    .hosp-name {
+      font-family: 'Fraunces', serif; font-size: 1rem;
+      color: var(--sky-dark); margin-bottom: .35rem;
+    }
+    .hosp-desc {
+      font-size: .83rem; color: var(--ink-muted); margin-bottom: .85rem;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    /* Info rows (address, phone, hours) */
+    .hosp-info   { display: flex; flex-direction: column; gap: .3rem; font-size: .81rem; color: var(--ink-muted); margin-bottom: .85rem; }
+    .hosp-info-row { display: flex; align-items: flex-start; gap: .45rem; }
+    .hosp-info-row a { color: var(--sky-dark); }
+    /* Specialty tags */
+    .hosp-specs  { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .9rem; }
+    .spec-pill {
+      background: rgba(93,173,226,.1); color: var(--sky-dark);
+      font-size: .71rem; padding: .2rem .6rem; border-radius: 50px; font-weight: 600;
+    }
+    /* Card footer with distance and website link */
+    .hosp-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: .85rem; border-top: 1px solid var(--border);
+    }
+    .dist-pill {
+      display: inline-flex; align-items: center; gap: .25rem;
+      background: var(--sky-pale); color: var(--sky-dark);
+      font-size: .76rem; font-weight: 700; padding: .25rem .65rem; border-radius: 50px;
+    }
+    /* No results state */
+    .no-results { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: var(--ink-muted); }
+    .no-results .nr-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1060px) { .hospitals-grid { grid-template-columns: 1fr 1fr; padding: 2rem 1.5rem; } .page-hero,.filters-bar { padding-left: 1.5rem; padding-right: 1.5rem; } }
+    @media(max-width:640px)  { .hospitals-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <div id="navbar"></div>
+
+  <!-- PAGE HERO — TO CHANGE TEXT: edit h1 and p below -->
+  <div class="page-hero">
+    <h1>Hospitals in Phnom Penh</h1>
+    <p>Browse all public and private medical facilities · Filter by type and specialty</p>
+  </div>
+
+  <!-- ── FILTER BAR ──────────────────────────────────────────────────────
+       TO ADD A NEW FILTER: add another <select> here and update loadHospitals()
+  ──────────────────────────────────────────────────────────────────────── -->
+  <div class="filters-bar">
+    <!-- Search by name — calls loadHospitals() on each keypress -->
+    <input class="filter-input" id="searchInput" placeholder="🔍  Search hospital name…" oninput="loadHospitals()" />
+    <!-- Hospital type filter -->
+    <select class="filter-select" id="typeFilter" onchange="loadHospitals()">
+      <option value="">All Types</option>
+      <option value="public">🏛 Public</option>
+      <option value="private">🏥 Private</option>
+    </select>
+    <!-- Specialty filter — options loaded from API -->
+    <select class="filter-select" id="specFilter" onchange="loadHospitals()">
+      <option value="">All Specialties</option>
+      <!-- Options injected by loadSpecialties() -->
+    </select>
+    <!-- GPS location toggle button -->
+    <button class="loc-btn" id="locBtn" onclick="toggleLocation()">📍 Use My Location</button>
+    <!-- Results count — updated by loadHospitals() -->
+    <span class="results-count" id="resultsCount">Loading…</span>
+  </div>
+
+  <!-- ── HOSPITAL CARDS GRID ─────────────────────────────────────────────
+       Cards are rendered dynamically by loadHospitals() below.
+       TO CHANGE CARD LAYOUT: edit .hospitals-grid CSS above.
+  ──────────────────────────────────────────────────────────────────────── -->
+  <div class="hospitals-grid" id="hospitalsGrid">
+    <!-- Loading skeletons (replaced by real cards after API response) -->
+    <div style="height:320px;background:linear-gradient(90deg,var(--border) 25%,var(--sky-pale) 50%,var(--border) 75%);background-size:400%;animation:shimmer 1.4s infinite;border-radius:var(--r-lg)"></div>
+    <div style="height:320px;background:linear-gradient(90deg,var(--border) 25%,var(--sky-pale) 50%,var(--border) 75%);background-size:400%;animation:shimmer 1.4s infinite;border-radius:var(--r-lg)"></div>
+    <div style="height:320px;background:linear-gradient(90deg,var(--border) 25%,var(--sky-pale) 50%,var(--border) 75%);background-size:400%;animation:shimmer 1.4s infinite;border-radius:var(--r-lg)"></div>
+  </div>
+  <style>@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}</style>
+
+  <div style="padding-bottom:4rem"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer"><div id="footer"></div></footer>
+  <div id="toast"></div>
+
+  <script src="../assets/js/shared.js"></script>
+  <script>
+    /* Initialize shared components */
+    renderNavbar('hospitals');
+    renderFooter();
+
+    /* State: GPS coordinates (null = not enabled) */
+    let userLat = null, userLon = null;
+
+    /* ── HOSPITAL PHOTO MAP ──────────────────────────────────────────────
+       ★ TO ADD YOUR OWN HOSPITAL PHOTOS:
+       Add entries like: 'Exact Hospital Name': 'https://photo-url.jpg'
+       You can also put images in assets/img/hospitals/ and use relative paths:
+       'Hospital Name': '../assets/img/hospitals/filename.jpg'
+    ─────────────────────────────────────────────────────────────────── */
+    const PHOTOS = {
+      'Calmette Hospital':                          'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=500&h=200&fit=crop&q=80',
+      'Khmer-Soviet Friendship Hospital':           'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=500&h=200&fit=crop&q=80',
+      'National Pediatric Hospital':                'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&h=200&fit=crop&q=80',
+      'Preah Ang Doung Hospital':                   'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&h=200&fit=crop&q=80',
+      'Techo Santepheap National Hospital':         'https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=500&h=200&fit=crop&q=80',
+      'Kantha Bopha Children\'s Hospital I':        'https://images.unsplash.com/photo-1559000357-f6b52ddfbe37?w=500&h=200&fit=crop&q=80',
+      'Cambodia-China Friendship Preah Kossamak Hospital': 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=500&h=200&fit=crop&q=80',
+      'Sunrise Japan Hospital Phnom Penh':          'https://images.unsplash.com/photo-1587351021759-3e566b3db4f1?w=500&h=200&fit=crop&q=80',
+      'Raffles Medical Phnom Penh':                 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=500&h=200&fit=crop&q=80',
+      'Cho Ray Phnom Penh Hospital':                'https://images.unsplash.com/photo-1584982751601-97dea52932d8?w=500&h=200&fit=crop&q=80',
+      'Sen Sok International University Hospital':  'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=500&h=200&fit=crop&q=80',
+      'Royal Phnom Penh Hospital':                  'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=500&h=200&fit=crop&q=80',
+      'Roomchang Dental Hospital':                  'https://images.unsplash.com/photo-1606811841689-23dfddce3e66?w=500&h=200&fit=crop&q=80',
+      'Meng Rutnin Eye Specialist':                 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=500&h=200&fit=crop&q=80',
+      'Sombok Psychology':                          'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=200&fit=crop&q=80',
+      'Studio On. Physiotherapy':                   'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=200&fit=crop&q=80',
+      'TPO Cambodia':                               'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=200&fit=crop&q=80',
+      'Oasis House Cambodia':                       'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=500&h=200&fit=crop&q=80',
+    };
+
+    /* Resolve a photo URL for a hospital. Falls back by type keyword. */
+    function getPhoto(name) {
+      if (PHOTOS[name]) return PHOTOS[name];
+      const n = name.toLowerCase();
+      if (n.includes('dental') || n.includes('teeth')) return 'https://images.unsplash.com/photo-1606811841689-23dfddce3e66?w=500&h=200&fit=crop&q=80';
+      if (n.includes('eye'))     return 'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=500&h=200&fit=crop&q=80';
+      if (n.includes('child') || n.includes('pediatric') || n.includes('kantha') || n.includes('domrey')) return 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&h=200&fit=crop&q=80';
+      if (n.includes('mental') || n.includes('psych') || n.includes('bright minds') || n.includes('amari')) return 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=200&fit=crop&q=80';
+      if (n.includes('physio') || n.includes('rehab') || n.includes('movement') || n.includes('orienda')) return 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=200&fit=crop&q=80';
+      if (n.includes('maternity') || n.includes('khema') || n.includes('julie')) return 'https://images.unsplash.com/photo-1559000357-f6b52ddfbe37?w=500&h=200&fit=crop&q=80';
+      if (n.includes('spa') || n.includes('samata')) return 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=500&h=200&fit=crop&q=80';
+      return 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=500&h=200&fit=crop&q=80';
+    }
+
+    /* ── Load specialty dropdown options from API ───────────────────── */
+    async function loadSpecialties() {
+      try {
+        const specs = await apiFetch('/hospitals/specialties');
+        const sel = document.getElementById('specFilter');
+        specs.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.specialty_name;
+          opt.textContent = s.specialty_name;
+          sel.appendChild(opt);
+        });
+      } catch(e) { /* Silently fail — filter just won't have specialty options */ }
+    }
+
+    /* ── Load and render hospital cards ────────────────────────────────
+       Called on page load and whenever a filter changes.
+       TO CHANGE HOW MANY CARDS SHOW: this shows all — add .slice(0,N) to limit.
+    ─────────────────────────────────────────────────────────────────── */
+    async function loadHospitals() {
+      const search  = document.getElementById('searchInput').value;
+      const type    = document.getElementById('typeFilter').value;
+      const spec    = document.getElementById('specFilter').value;
+      try {
+        const params = new URLSearchParams({ search, type, specialty: spec });
+        let hospitals = await apiFetch('/hospitals?' + params.toString());
+
+        /* If GPS enabled: add distance and sort nearest first */
+        if (userLat && userLon) {
+          hospitals = hospitals.map(h => ({
+            ...h,
+            distance_km: h.latitude && h.longitude
+              ? haversine(userLat, userLon, h.latitude, h.longitude)
+              : null
+          })).sort((a, b) => (a.distance_km || 9999) - (b.distance_km || 9999));
+        }
+
+        /* Update results counter */
+        document.getElementById('resultsCount').textContent =
+          `${hospitals.length} hospital${hospitals.length !== 1 ? 's' : ''} found`;
+
+        const grid = document.getElementById('hospitalsGrid');
+
+        if (!hospitals.length) {
+          grid.innerHTML = `<div class="no-results">
+            <div class="nr-icon">🏥</div>
+            <h3>No hospitals found</h3>
+            <p>Try adjusting your search or filters</p>
+          </div>`;
+          return;
+        }
+
+        /* Render each hospital as a card */
+        grid.innerHTML = hospitals.map(h => `
+          <div class="hosp-card">
+            <!-- Hospital photo -->
+            <div class="hosp-photo">
+              <img
+                src="${getPhoto(h.name)}"
+                alt="${esc(h.name)}"
+                loading="lazy"
+                onerror="this.parentElement.innerHTML='<div class=hosp-photo-placeholder>🏥</div>'"
+              />
+              <!-- Badge overlaid on photo -->
+              <div class="photo-badge">
+                <span class="badge badge-${h.hospital_type}">
+                  ${h.hospital_type === 'public' ? '🏛 Public' : '🏥 Private'}
+                </span>
+              </div>
+            </div>
+            <!-- Card body -->
+            <div class="hosp-body">
+              <!-- Hospital name and 24h badge -->
+              <div class="hosp-top">
+                <div>
+                  <div class="hosp-name">${esc(h.name)}</div>
+                </div>
+                ${h.opening_hours === '24 hours' ? '<span class="badge badge-gold">24/7</span>' : ''}
+              </div>
+              <!-- Description -->
+              <div class="hosp-desc">${esc(h.description || 'Medical facility in Phnom Penh')}</div>
+              <!-- Info: address, phone, hours, website -->
+              <div class="hosp-info">
+                ${h.address ? `<div class="hosp-info-row">📍 <span>${esc(h.address)}</span></div>` : ''}
+                ${h.phone   ? `<div class="hosp-info-row">📞 <span>${esc(h.phone)}</span></div>` : ''}
+                ${h.opening_hours ? `<div class="hosp-info-row">🕐 <span>${esc(h.opening_hours)}</span></div>` : ''}
+                ${h.website ? `<div class="hosp-info-row">🌐 <a href="${esc(h.website)}" target="_blank" rel="noopener">Visit Website</a></div>` : ''}
+              </div>
+              <!-- Specialty tags (max 4 shown) -->
+              ${h.specialties?.length ? `<div class="hosp-specs">
+                ${h.specialties.slice(0,4).map(s => `<span class="spec-pill">${esc(s)}</span>`).join('')}
+                ${h.specialties.length > 4 ? `<span class="spec-pill">+${h.specialties.length-4}</span>` : ''}
+              </div>` : ''}
+              <!-- Footer: distance pill + website button -->
+              <div class="hosp-footer">
+                ${h.distance_km != null
+                  ? `<span class="dist-pill">📍 ${h.distance_km} km away</span>`
+                  : '<span></span>'}
+                ${h.website
+                  ? `<a href="${esc(h.website)}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Details →</a>`
+                  : '<span style="font-size:.78rem;color:var(--ink-muted)">No website</span>'}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) {
+        document.getElementById('hospitalsGrid').innerHTML =
+          `<div class="no-results">
+            <div class="nr-icon">⚠️</div>
+            <h3>Could not load hospitals</h3>
+            <p>Make sure the backend server is running on port 8000</p>
+          </div>`;
+      }
+    }
+
+    /* ── GPS Location toggle ────────────────────────────────────────── */
+    function toggleLocation() {
+      if (userLat) {
+        /* Disable GPS */
+        userLat = userLon = null;
+        document.getElementById('locBtn').classList.remove('active');
+        document.getElementById('locBtn').textContent = '📍 Use My Location';
+        loadHospitals();
+        return;
+      }
+      /* Request GPS permission */
+      if (!navigator.geolocation) { toast('Geolocation not supported', 'error'); return; }
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          userLat = pos.coords.latitude;
+          userLon = pos.coords.longitude;
+          document.getElementById('locBtn').classList.add('active');
+          document.getElementById('locBtn').textContent = '✅ Location Active';
+          loadHospitals();
+          toast('Location enabled — sorted by distance', 'success');
+        },
+        () => toast('Could not get location — check browser permissions', 'error')
+      );
+    }
+
+    /* Initialize page */
+    loadSpecialties();
+    loadHospitals();
+  </script>
+</body>
+</html>

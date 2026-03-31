@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- TO CHANGE BROWSER TAB TITLE: edit the text inside <title> -->
+  <title>FindMEDKH – Find Hospitals in Phnom Penh</title>
+  <!-- TO CHANGE FAVICON: replace href with your icon file path -->
+  <!-- <link rel="icon" href="assets/img/favicon.ico" /> -->
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       NAVBAR — rendered by shared.js renderNavbar()
+       TO CUSTOMIZE: edit renderNavbar() in assets/js/shared.js
+  ═══════════════════════════════════════════════════════════════════ -->
+  <div id="navbar"></div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       HERO SECTION
+       TO CHANGE HERO TEXT: edit h1 and p directly below
+       TO CHANGE HERO BUTTONS: edit .hero-actions buttons
+       TO CHANGE HERO STATS: edit .trust-item numbers
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-bg-pattern"></div>
+
+    <div class="hero-content">
+      <!-- Main headline — TO CHANGE: edit text directly -->
+      <h1>Find the Right<br /><em>Hospital</em>,<br />Right Now.</h1>
+      <!-- Subtitle — TO CHANGE: edit this paragraph -->
+      <p>Describe your symptoms and our smart assistant recommends the nearest, most suitable hospital in Phnom Penh — in seconds.</p>
+
+      <!-- CTA Buttons — TO CHANGE BUTTON TEXT OR LINKS: edit href and text -->
+      <div class="hero-actions">
+        <a href="pages/chatbot.html" class="btn btn-coral btn-lg">
+          💬 Chat with MED Bot
+        </a>
+        <a href="pages/hospitals.html" class="btn btn-outline btn-lg">
+          Browse Hospitals →
+        </a>
+      </div>
+
+      <!-- Stats strip — TO CHANGE NUMBERS: edit .trust-num spans -->
+      <div class="hero-trust">
+        <div class="trust-item">
+          <!-- Updated dynamically from API in <script> below -->
+          <span class="trust-num" id="hospCount">60+</span>
+          <span>Hospitals</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <span class="trust-num">31</span>
+          <span>Specialties</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <span class="trust-num">24/7</span>
+          <span>Emergency Info</span>
+        </div>
+        <div class="trust-sep"></div>
+        <div class="trust-item">
+          <span class="trust-num">Free</span>
+          <span>Always</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Visual — TO HIDE: add style="display:none" to .hero-visual -->
+    <div class="hero-visual">
+      <!-- Floating card 1 — TO CHANGE TEXT: edit strong and small content -->
+      <div class="hero-card-float card-1">
+        <div class="hcf-icon">🏥</div>
+        <div>
+          <strong>Calmette Hospital</strong>
+          <small>National Referral · 24 hrs</small>
+        </div>
+      </div>
+
+      <!-- Animated ring with cross symbol -->
+      <div class="hero-ring">
+        <div class="hero-ring-inner">✚</div>
+      </div>
+
+      <!-- Floating card 2 — TO CHANGE TEXT: edit content here -->
+      <div class="hero-card-float card-2">
+        <div class="hcf-icon">📍</div>
+        <div>
+          <strong>Nearest to you</strong>
+          <small>GPS-powered sorting</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wave divider at bottom of hero — TO CHANGE WAVE COLOR: edit fill="#EBF5FB" -->
+    <svg class="hero-wave" viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#EBF5FB"/>
+    </svg>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       HOW IT WORKS — 3 steps
+       TO CHANGE STEPS: edit .step-card content below
+       TO ADD A STEP: copy a .step-card block and add a .step-connector before it
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="section-label">Simple Process</span>
+        <h2>How FindMEDKH Works</h2>
+        <p>Three steps from symptom to the right hospital</p>
+      </div>
+      <div class="steps-grid">
+        <!-- Step 1 — TO CHANGE: edit icon, h3, and p text -->
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">💬</div>
+          <h3>Describe Symptoms</h3>
+          <p>Type your symptoms in plain language — no medical jargon needed at all.</p>
+        </div>
+        <div class="step-connector"></div>
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">🔍</div>
+          <h3>Smart Matching</h3>
+          <p>Our chatbot detects your medical specialty and finds matching hospitals instantly.</p>
+        </div>
+        <div class="step-connector"></div>
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">📌</div>
+          <h3>Get Directions</h3>
+          <p>See the top 3 nearest hospitals sorted by GPS distance from your location.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       SPECIALTIES SECTION — clickable chips that open chatbot
+       TO ADD A CHIP: copy a .sp-chip line, change emoji, label, and onclick message
+       TO REMOVE A CHIP: delete the corresponding .sp-chip line
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="specialties-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Medical Specialties</span>
+        <h2>Every Specialty Covered</h2>
+        <p>Click any specialty to get hospital recommendations instantly</p>
+      </div>
+      <div class="specialty-chips">
+        <!-- Each chip sends a pre-filled message to chatbot -->
+        <!-- TO ADD: copy a chip line below and change emoji, text, and the onclick message -->
+        <span class="sp-chip" onclick="goChat('I have chest pain')">❤️ Cardiology</span>
+        <span class="sp-chip" onclick="goChat('my child is sick fever')">👶 Pediatrics</span>
+        <span class="sp-chip" onclick="goChat('tooth pain dentist')">🦷 Dental</span>
+        <span class="sp-chip" onclick="goChat('eye problem blurry vision')">👁️ Eye Care</span>
+        <span class="sp-chip" onclick="goChat('I feel depressed anxious')">🧠 Mental Health</span>
+        <span class="sp-chip" onclick="goChat('I am pregnant maternity')">🤰 Maternity</span>
+        <span class="sp-chip" onclick="goChat('muscle pain rehab physiotherapy')">🏃 Physiotherapy</span>
+        <span class="sp-chip" onclick="goChat('emergency accident urgent')">🚨 Emergency</span>
+        <span class="sp-chip" onclick="goChat('skin rash dermatology')">🩹 Dermatology</span>
+        <span class="sp-chip" onclick="goChat('I need surgery operation')">🔬 Surgery</span>
+        <span class="sp-chip" onclick="goChat('bone fracture orthopedic')">🦴 Orthopedics</span>
+        <span class="sp-chip" onclick="goChat('brain stroke neurology')">🧬 Neurology</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FEATURED HOSPITALS — loaded dynamically from API
+       Cards are rendered by JavaScript below using apiFetch('/hospitals')
+       TO CHANGE NUMBER OF CARDS: edit .slice(0, 6) in the script
+       TO CHANGE CARD LAYOUT: edit .featured-grid in home.css
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Featured</span>
+        <h2>Top Hospitals in Phnom Penh</h2>
+        <p>Trusted medical facilities across the city</p>
+      </div>
+      <!-- Cards injected here by script → loadFeatured() -->
+      <div class="featured-grid" id="featuredHospitals">
+        <!-- Loading skeletons shown while fetching data -->
+        <div class="feat-skeleton"></div>
+        <div class="feat-skeleton"></div>
+        <div class="feat-skeleton"></div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem">
+        <a href="pages/hospitals.html" class="btn btn-outline btn-lg">View All Hospitals →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       CTA BANNER
+       TO CHANGE HEADLINE: edit h2 text
+       TO CHANGE BUTTON: edit btn-coral anchor
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <div>
+          <!-- TO CHANGE CTA TEXT: edit h2 and p below -->
+          <h2>Not sure which hospital?</h2>
+          <p>Let MED Bot guide you — free, instant, no appointment needed.</p>
+        </div>
+        <a href="pages/chatbot.html" class="btn btn-coral btn-lg">Start Chat Free →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FOOTER — rendered by shared.js renderFooter()
+       TO CUSTOMIZE: edit renderFooter() in assets/js/shared.js
+  ═══════════════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div id="footer"></div>
+  </footer>
+
+  <div id="toast"></div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       PAGE SCRIPTS
+  ═══════════════════════════════════════════════════════════════════ -->
+  <script src="assets/js/shared.js"></script>
+  <script>
+    /* Initialize navbar and footer */
+    /* TO CHANGE ACTIVE NAV LINK: change 'home' to another page key */
+    renderNavbar('home');
+    renderFooter();
+
+    /* ── goChat: redirect to chatbot with pre-filled message ─────────── */
+    /* Called by specialty chip clicks — saves message to localStorage */
+    function goChat(msg) {
+      localStorage.setItem('fmkh_prefill', msg);
+      window.location.href = 'pages/chatbot.html';
+    }
+
+    /* ── Hospital photo mapping ───────────────────────────────────────────
+       Maps hospital names to Unsplash photo URLs.
+       ★ TO ADD REAL HOSPITAL PHOTOS:
+         1. Upload your photo to your server or cloud storage (e.g. Cloudinary)
+         2. Add an entry: 'Hospital Name': 'https://your-photo-url.jpg'
+       ★ TO USE LOCAL PHOTOS:
+         Put images in frontend/assets/img/hospitals/ and reference like:
+         'Hospital Name': '../assets/img/hospitals/hospital-name.jpg'
+    ─────────────────────────────────────────────────────────────────── */
+    const HOSPITAL_PHOTOS = {
+      /* Public hospitals */
+      'Calmette Hospital':                     'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=400&h=200&fit=crop&q=80',
+      'National Pediatric Hospital':           'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=200&fit=crop&q=80',
+      'Kantha Bopha Children\'s Hospital I':   'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=200&fit=crop&q=80',
+      'Techo Santepheap National Hospital':    'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&h=200&fit=crop&q=80',
+      /* Private hospitals */
+      'Sunrise Japan Hospital Phnom Penh':     'https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=400&h=200&fit=crop&q=80',
+      'Raffles Medical Phnom Penh':            'https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=200&fit=crop&q=80',
+      'Royal Phnom Penh Hospital':             'https://images.unsplash.com/photo-1587351021759-3e566b3db4f1?w=400&h=200&fit=crop&q=80',
+      'Sen Sok International University Hospital': 'https://images.unsplash.com/photo-1559000357-f6b52ddfbe37?w=400&h=200&fit=crop&q=80',
+      /* Dental */
+      'Roomchang Dental Hospital':             'https://images.unsplash.com/photo-1606811841689-23dfddce3e66?w=400&h=200&fit=crop&q=80',
+      /* Eye */
+      'Meng Rutnin Eye Specialist':            'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&h=200&fit=crop&q=80',
+      /* Mental health */
+      'Sombok Psychology':                     'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=200&fit=crop&q=80',
+    };
+
+    /* Default photo when no specific photo exists for a hospital */
+    const DEFAULT_PHOTO = 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=400&h=200&fit=crop&q=80';
+
+    /* Get photo URL for a hospital by name */
+    function getHospitalPhoto(name) {
+      /* Check for an exact match first, then substring match */
+      if (HOSPITAL_PHOTOS[name]) return HOSPITAL_PHOTOS[name];
+      for (const [key, url] of Object.entries(HOSPITAL_PHOTOS)) {
+        if (name.toLowerCase().includes(key.toLowerCase().split(' ')[0])) return url;
+      }
+      /* Return themed default based on hospital type keywords */
+      if (name.toLowerCase().includes('dental'))  return 'https://images.unsplash.com/photo-1606811841689-23dfddce3e66?w=400&h=200&fit=crop&q=80';
+      if (name.toLowerCase().includes('eye'))     return 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400&h=200&fit=crop&q=80';
+      if (name.toLowerCase().includes('child') || name.toLowerCase().includes('pediatric')) return 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=200&fit=crop&q=80';
+      if (name.toLowerCase().includes('mental') || name.toLowerCase().includes('psych')) return 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=200&fit=crop&q=80';
+      if (name.toLowerCase().includes('physio') || name.toLowerCase().includes('rehab')) return 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=200&fit=crop&q=80';
+      return DEFAULT_PHOTO;
+    }
+
+    /* ── loadFeatured: fetch and render featured hospital cards ─────────── */
+    async function loadFeatured() {
+      try {
+        const hospitals = await apiFetch('/hospitals');
+        /* Update stat count */
+        document.getElementById('hospCount').textContent = hospitals.length + '+';
+        /* Show first 6 hospitals as featured — TO CHANGE: edit .slice(0, 6) */
+        const featured = hospitals.slice(0, 6);
+
+        document.getElementById('featuredHospitals').innerHTML = featured.map(h => `
+          <div class="feat-card card" onclick="window.location='pages/hospitals.html'">
+            <!-- Hospital photo -->
+            <div class="feat-photo">
+              <img
+                src="${getHospitalPhoto(h.name)}"
+                alt="${esc(h.name)}"
+                loading="lazy"
+                onerror="this.parentElement.innerHTML='<div class=feat-photo-placeholder>🏥</div>'"
+              />
+            </div>
+            <div class="feat-body">
+              <!-- Badges row -->
+              <div class="feat-top">
+                <span class="badge badge-${h.hospital_type}">
+                  ${h.hospital_type === 'public' ? '🏛 Public' : '🏥 Private'}
+                </span>
+                ${h.opening_hours === '24 hours' ? '<span class="badge badge-gold">24/7</span>' : ''}
+              </div>
+              <!-- Hospital name -->
+              <div class="feat-name">${esc(h.name)}</div>
+              <!-- Description (clamped to 2 lines in CSS) -->
+              <div class="feat-desc">${esc(h.description || 'Medical facility in Phnom Penh')}</div>
+              <!-- Meta info -->
+              <div class="feat-meta">
+                ${h.phone ? `<span>📞 ${esc(h.phone)}</span>` : ''}
+                ${h.specialties?.length ? `<span>🩺 ${h.specialties.slice(0,2).map(s => esc(s)).join(', ')}</span>` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) {
+        /* Show error message if API unreachable */
+        document.getElementById('featuredHospitals').innerHTML =
+          `<p style="color:var(--ink-muted);grid-column:1/-1;text-align:center;padding:3rem">
+            ⚠️ Could not load hospitals. Make sure the backend server is running on port 8000.
+          </p>`;
+      }
+    }
+
+    /* Load hospitals on page ready */
+    loadFeatured();
+  </script>
+</body>
+</html>
